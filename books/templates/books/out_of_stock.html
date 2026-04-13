@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Out of Stock Books</h1>
+
+{% for book in books %}
+    <div>
+        <h3>{{ book.title }}</h3>
+        <p>Author: {{ book.author }}</p>
+        <p>Price: €{{ book.price }}</p>
+    </div>
+{% empty %}
+    <p>All books are in stock!</p>
+{% endfor %}
+
+{% endblock %}

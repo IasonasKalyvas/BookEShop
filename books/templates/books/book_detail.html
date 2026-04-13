@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ book.title }}</h1>
+<p><strong>Author:</strong> {{ book.author }}</p>
+<p><strong>Categories:</strong></p>
+<ul>
+    {% for category in book.categories.all %}
+        <li>
+            {{ category.name }}
+        </li>
+    {% endfor %}
+</ul>
+<p><strong>Description:</strong> {{ book.description }}</p>
+<p><strong>Price:</strong> €{{ book.price }}</p>
+<p><strong>Stock:</strong> {{ book.stock }}</p>
+<hr>
+<h3>Similar Books</h3>
+{% for similar in similar_books %}
+    <p>
+        <a href="{% url 'books:book_detail' similar.slug %}">
+            {{ similar.title }}
+        </a>
+    </p>
+{% empty %}
+    <p>No recommendations available</p>
+{% endfor %}
+<br>
+<a href="{% url 'books:book_list' %}">Back</a>
+
+{% endblock %}

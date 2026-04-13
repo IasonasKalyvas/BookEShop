@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Featured Book of the Day</h1>
+
+{% if book %}
+    <div>
+        <h2>{{ book.title }}</h2>
+        <p>Author: {{ book.author }}</p>
+        <p>Price: €{{ book.price }}</p>
+
+      #placeholder 
+        <p><strong>Special Offer Today!</strong></p>
+    </div>
+{% else %}
+    <p>No featured book available</p>
+{% endif %}
+
+{% endblock %}

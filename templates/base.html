@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Book Shop{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+
+<body>
+    <nav>
+        <a href="{% url 'books:book_list' %}">Home</a>
+        <a href="{% url 'books:featured_books' %}">Featured</a>
+        <a href="{% url 'books:out_of_stock' %}">Out of Stock</a>
+    </nav>
+
+    <hr>
+
+    <!-- PAGE CONTENT WILL GO HERE -->
+    {% block content %}
+    {% endblock %}
+
+    <script src="{% static 'js/main.js' %}" defer></script>
+</body>
+</html>
