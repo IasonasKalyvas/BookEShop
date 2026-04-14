@@ -35,7 +35,8 @@ def book_detail(request, slug):
 
     book = get_object_or_404(Book, slug=slug)
     similar_books = Book.objects.filter(
-        categories__in=book.categories.all()
+        categories__in=book.categories.all(),
+        stock__gt=0
     ).exclude(id=book.id).distinct()[:4]
     return render(request, 'books/book_detail.html', {
         'book': book,

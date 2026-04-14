@@ -1,93 +1,110 @@
 {% extends "base.html" %}
-<!-- 🔥 THIS LINE CONNECTS IT TO BASE TEMPLATE -->
 
 {% block title %}All Books{% endblock %}
 
 {% block content %}
-<!-- 🔥 EVERYTHING INSIDE HERE IS YOUR EXISTING PAGE -->
+<!-- ========================= PAGE WRAPPER (CENTERS CONTENT) ========================= -->
+<div class="container">
+    <h1 class="page-title">All Books</h1>
 
-<h1>All Books</h1>
+    <!-- ========================= FILTER FORM (METABOOK STYLE) ========================== -->
+    <form method="GET" action="{% url 'books:book_filter' %}" class="filter-bar">
+        <!-- SEARCH -->
+        <input type="text" name="search" placeholder="Search books...">
+        <input type="text" name="author" placeholder="Author">
+        <input type="number" name="id" placeholder="Book ID">
+        <input type="number" name="min_price" placeholder="Min Price">
+        <input type="number" name="max_price" placeholder="Max Price">
 
-<form method="GET" action="{% url 'books:book_filter' %}">
+        <!-- ========================= CATEGORY DROPDOWN ========================== -->
+        <details class="dropdown">
+            <summary>Categories</summary>
+            <div class="dropdown-content">
+                {% for category in categories %}
+                <label class="checkbox-item">
+                    <input type="checkbox" name="genre" value="{{ category.name }}"
+                           {% if category.name in selected_genres %}checked{% endif %}>
+                    {{ category.name }}
+                </label>
+                {% endfor %}
+            </div>
+        </details>
 
-    <input type="text" name="search" placeholder="Search title">
-    <input type="text" name="author" placeholder="Author">
-    <input type="number" name="id" placeholder="Book ID">
-    <input type="number" name="min_price" placeholder="Min Price">
-    <input type="number" name="max_price" placeholder="Max Price">
+        <!-- ========================= DATE FILTER GROUPED ========================== -->
+        <details class="dropdown">
+            <summary>Publication Date</summary>
+            <div class="dropdown-content">
+                <label>
+                    <input type="radio" name="date_filter" value="30"
+                           {% if selected_date == "30" %}checked{% endif %}>
+                    Last 30 Days
+                </label>
+                <label>
+                    <input type="radio" name="date_filter" value="90"
+                           {% if selected_date == "90" %}checked{% endif %}>
+                    Last 3 Months
+                </label>
+                <label>
+                    <input type="radio" name="date_filter" value="180"
+                           {% if selected_date == "180" %}checked{% endif %}>
+                    Last 6 Months
+                </label>
+                <label>
+                    <input type="radio" name="date_filter" value="365"
+                           {% if selected_date == "365" %}checked{% endif %}>
+                    Last Year
+                </label>
+            </div>
+        </details>
+
+        <!-- APPLY BUTTON -->
+        <button type="submit">Apply Filters</button>
+    </form>
+
+    <!-- CLEAR FILTERS -->
+    <a href="{% url 'books:book_list' %}">
+        <button type="button">Clear</button>
+    </a>
 
     <hr>
 
-    <h3>Categories</h3>
-    {% for category in categories %}
-        <label>
-            <input type="checkbox" name="genre" value="{{ category.name }}"
-                {% if category.name in selected_genres %}checked{% endif %}>
-            {{ category.name }}
-        </label>
-    {% endfor %}
+    <!-- ========================= BOOK GRID ========================== -->
+    <div class="book-container">
+        {% for book in books %}
+        <div class="book-card">
+            <!-- ========================= MODIFIED IMAGE DISPLAY ========================= -->
+            <!-- Uses the new get_primary_image method to display the cover image -->
+            <!-- This ensures the primary image (or first image as fallback) is shown -->
+            {% with primary_image=book.get_primary_image %}
+                {% if primary_image %}
+                    <img src="{{ primary_image.image.url }}" alt="{{ book.title }}">
+                {% else %}
+                    <div class="no-image">No Image</div>
+                {% endif %}
+            {% endwith %}
+            
+            <div class="book-info">
+                <!-- TITLE -->
+                <h3 class="book-title">
+                    <a href="{% url 'books:book_detail' book.slug %}">
+                        {{ book.title }}
+                    </a>
+                </h3>
 
-    <br><br>
+                <!-- AUTHOR -->
+                <p class="book-author">
+                    {{ book.author }}
+                </p>
 
-    <h3>Publication Date</h3>
-
-    <label>
-        <input type="radio" name="date_filter" value="30"
-            {% if selected_date == "30" %}checked{% endif %}>
-        This Month
-    </label><br>
-
-    <label>
-        <input type="radio" name="date_filter" value="90"
-            {% if selected_date == "90" %}checked{% endif %}>
-        Last 3 Months
-    </label><br>
-
-    <label>
-        <input type="radio" name="date_filter" value="180"
-            {% if selected_date == "180" %}checked{% endif %}>
-        Last 6 Months
-    </label><br>
-
-    <label>
-        <input type="radio" name="date_filter" value="365"
-            {% if selected_date == "365" %}checked{% endif %}>
-        Last Year
-    </label><br>
-
-    <button type="submit">Apply Filters</button>
-
-</form>
-
-<a href="{% url 'books:book_list' %}">
-    <button type="button">Clear</button>
-</a>
-
-<hr>
-
-{% for book in books %}
-    <div>
-        <h3>
-            <a href="{% url 'books:book_detail' book.slug %}">
-                {{ book.title }}
-            </a>
-        </h3>
-
-        <p>Author: {{ book.author }}</p>
-        <p>Price: €{{ book.price }}</p>
-
-        <p>
-            Categories:
-            {% for category in book.categories.all %}
-                {{ category.name }}{% if not forloop.last %}, {% endif %}
-            {% endfor %}
-        </p>
-
-        <hr>
+                <!-- PRICE -->
+                <p class="book-price">
+                    €{{ book.price }}
+                </p>
+            </div>
+        </div>
+        {% empty %}
+        <p>No books found.</p>
+        {% endfor %}
     </div>
-
-{% empty %}
-    <p>No books found.</p>
-{% endfor %}
-
+</div>
 {% endblock %}
