@@ -1,12 +1,13 @@
 {% extends "base.html" %}
-
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/book_list.css' %}">
+{% endblock %}
 {% block title %}All Books{% endblock %}
-
 {% block content %}
 <!-- ========================= PAGE WRAPPER (CENTERS CONTENT) ========================= -->
 <div class="container">
     <h1 class="page-title">All Books</h1>
-
     <!-- ========================= FILTER FORM (METABOOK STYLE) ========================== -->
     <form method="GET" action="{% url 'books:book_filter' %}" class="filter-bar">
         <!-- SEARCH -->
@@ -15,7 +16,6 @@
         <input type="number" name="id" placeholder="Book ID">
         <input type="number" name="min_price" placeholder="Min Price">
         <input type="number" name="max_price" placeholder="Max Price">
-
         <!-- ========================= CATEGORY DROPDOWN ========================== -->
         <details class="dropdown">
             <summary>Categories</summary>
@@ -29,7 +29,6 @@
                 {% endfor %}
             </div>
         </details>
-
         <!-- ========================= DATE FILTER GROUPED ========================== -->
         <details class="dropdown">
             <summary>Publication Date</summary>
@@ -50,24 +49,20 @@
                     Last 6 Months
                 </label>
                 <label>
-                    <input type="radio" name="date_filter" value="365"
-                           {% if selected_date == "365" %}checked{% endif %}>
-                    Last Year
+                     <input type="radio" name="date_filter" value=""
+                        {% if not selected_date or selected_date == "" %}checked{% endif %}>
+                    All Time
                 </label>
             </div>
         </details>
-
         <!-- APPLY BUTTON -->
         <button type="submit">Apply Filters</button>
     </form>
-
     <!-- CLEAR FILTERS -->
     <a href="{% url 'books:book_list' %}">
         <button type="button">Clear</button>
     </a>
-
     <hr>
-
     <!-- ========================= BOOK GRID ========================== -->
     <div class="book-container">
         {% for book in books %}

@@ -14,12 +14,23 @@ def get_categories():
 def book_list(request):
     """
     Show all books (default page)
-    Also handles selected filters so UI stays consistent
+    Handles homepage + filter consistency
     """
 
     books = Book.objects.filter(stock__gt=0)
+
     selected_genres = request.GET.getlist('genre')
+    single_genre = request.GET.get('genre')
     selected_date = request.GET.get('date_filter')
+
+    # 🟢 SINGLE GENRE (homepage clicks)
+    if single_genre:
+        books = books.filter(categories__name__iexact=single_genre)
+
+    # 🟢 MULTI GENRE (checkbox filters)
+    if selected_genres:
+        books = books.filter(categories__name__in=selected_genres).distinct()
+
     return render(request, 'books/book_list.html', {
         'books': books,
         'categories': get_categories(),
@@ -78,6 +89,7 @@ def book_filter(request):
 
     books = Book.objects.filter(stock__gt=0)
     selected_genres = request.GET.getlist('genre')
+    single_genre = request.GET.get('genre')
     selected_date = request.GET.get('date_filter')
     search = request.GET.get('search')
     if search:
@@ -102,11 +114,15 @@ def book_filter(request):
         books = books.filter(published_date__gte=today - timedelta(days=90))
     elif selected_date == "180":
         books = books.filter(published_date__gte=today - timedelta(days=180))
-    elif selected_date == "365":
-        books = books.filter(published_date__gte=today - timedelta(days=365))
+    else:
+        pass
+    # CASE 1: homepage sends single genre
+    if single_genre:
+        books = books.filter(categories__name__iexact=single_genre)
+
+    # CASE 2: filter page sends multiple genres
     if selected_genres:
-        for genre in selected_genres:
-            books = books.filter(categories__name=genre)
+        books = books.filter(categories__name__in=selected_genres).distinct()
 
     return render(request, 'books/book_list.html', {
         'books': books,

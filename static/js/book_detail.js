@@ -49,12 +49,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const buttons = document.querySelectorAll(".read-more-btn");
 
     buttons.forEach(btn => {
+        const targetId = btn.dataset.target;
+        const text = document.getElementById(targetId);
+
+        if (!text) return;
+
+        // STEP 1: measure full height
+        text.classList.remove("collapsed");
+        text.classList.add("expanded");
+
+        const fullHeight = text.scrollHeight;
+
+        // STEP 2: apply collapsed and measure again
+        text.classList.remove("expanded");
+        text.classList.add("collapsed");
+
+        const collapsedHeight = text.clientHeight;
+
+        // STEP 3: compare
+        if (fullHeight <= collapsedHeight + 2) {
+            // ❌ Text is SHORT → no button
+            btn.style.display = "none";
+            text.classList.remove("collapsed");
+            return;
+        }
+
+        // ✅ Text is LONG → enable button
+        btn.style.display = "inline-block";
+
         btn.addEventListener("click", () => {
-            const targetId = btn.dataset.target;
-            const text = document.getElementById(targetId);
-
-            if (!text) return;
-
             const isCollapsed = text.classList.contains("collapsed");
 
             if (isCollapsed) {

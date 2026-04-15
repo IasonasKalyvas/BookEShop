@@ -11,5 +11,4 @@ urlpatterns = [
     path('out-of-stock/', views.out_of_stock, name='out_of_stock'),
     path('<slug:slug>/', views.book_detail, name='book_detail'),
    
-
 ]

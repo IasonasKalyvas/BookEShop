@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+{% block content %}
+<div class="home-wrapper">
+    <section class="home-hero">
+        <div class="home-hero-overlay">
+            <div class="home-hero-content">
+                <h1>Your Next Adventure Awaits</h1>
+                <p>Explore thousands of titles curated just for you.</p>
+                <a href="{% url 'books:book_list' %}" class="home-btn">
+                    Start Browsing
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="container categories-section">
+    <h2 class="section-title">Browse by Genre</h2>
+    <div class="home-category-grid">
+        {% for cat in categories %}
+            <a class="home-category-btn"
+               href="{% url 'books:book_list' %}?genre={{ cat.name|urlencode }}">
+                {{ cat.name }}
+            </a>
+        {% endfor %}
+    </div>
+    </section>
+    <section class="container recommendations">
+        <h2>Handpicked for You</h2>
+        <div class="book-row">
+             <!-- code to display recommended books -->
+        </div>
+    </section>
+    <section class="container recent-reviews">
+        <h2>What Readers are Saying</h2>
+        <div class="reviews-container">
+            </div>
+    </section>
+</div>
+{% endblock %}

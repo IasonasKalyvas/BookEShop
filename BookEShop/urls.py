@@ -17,13 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from books import views
+from core import views as core_views
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('books/', include('books.urls')),
-    path('', views.book_list, name='home'),
+    path('accounts/', include('accounts.urls')),
+    path('', core_views.home, name='home'),
 ]
 
 if settings.DEBUG:

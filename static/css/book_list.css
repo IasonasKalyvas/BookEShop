@@ -1,0 +1,75 @@
+/* ========================= FILTER BAR ========================= */
+.filter-bar {
+    background: #ffffff;
+    padding: 16px;
+    border-radius: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    border: 1px solid #ddd;
+    justify-content: center;
+}
+.filter-bar input {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    min-width: 150px;
+}
+.dropdown {
+    background: #f9f9f9;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    min-width: 180px;
+}
+.dropdown summary {
+    cursor: pointer;
+    font-weight: bold;
+}
+.dropdown-content {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+/* ========================= BOOK GRID ========================= */
+.book-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-top: 30px;
+}
+.book-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #e0ddd7;
+    transition: 0.25s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.book-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.book-card img {
+    width: 100%;
+    height: 260px;
+    object-fit: contain;
+    background: linear-gradient(135deg, #f6f6f6, #eeeeee);
+    padding: 12px;
+    box-sizing: border-box;
+}
+.book-info {
+    padding: 15px;
+    text-align: center;
+    border-top: 5px solid #2f5d3f; 
+}
+.book-title { font-size: 16px; font-weight: bold; margin: 0 0 8px 0; }
+.book-title a { color: #2f3b2f; text-decoration: none; }
+.book-author { color: #888; font-size: 13px; margin: 0 0 8px 0; }
+.book-price { font-weight: bold; color: #2f5d3f; font-size: 16px; }
+
+/* Responsive List */
+@media (max-width: 768px) { .book-container { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 576px) {
+    .book-container { grid-template-columns: 1fr; }
+    .filter-bar { flex-direction: column; }
+    .filter-bar input, .dropdown { width: 100%; }
+}
