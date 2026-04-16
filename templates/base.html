@@ -15,15 +15,36 @@
 
 <body>
     <!-- 🔝 NAVBAR -->
-    <nav class="navbar">
+    <nav>
+    <!-- LEFT SIDE -->
+    <div class="nav-left">
+        <a href="{% url 'home' %}" class="logo">📚 BookEShop</a>
+
         <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'books:book_list' %}">Books</a>
-        <a href="{% url 'books:featured_books' %}">Featured</a>
-        <a href="{% url 'books:out_of_stock' %}">Out of Stock</a>
-        <div class="nav-right">
-            <a href="{% url 'accounts:login' %}" class="icon-btn">👤</a>
-            <button class="icon-btn">🌙</button>
-        </div>
+        <a href="{% url 'books:book_list' %}">Search</a>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="nav-right">
+
+        <!-- CART -->
+        <a href="{% url 'orders:cart' %}" class="cart-link">
+            🛒 Cart
+            {% if cart_count > 0 %}
+                <span class="cart-badge">{{ cart_count }}</span>
+            {% endif %}
+        </a>
+
+        <!-- PROFILE -->
+        <a href="{% url 'accounts:login' %}" class="icon-btn">
+            👤
+        </a>
+
+        <!-- DARK MODE -->
+        <button id="darkModeToggle" class="icon-btn">
+            🌙
+        </button>
+    </div>
     </nav>
 
     <hr>

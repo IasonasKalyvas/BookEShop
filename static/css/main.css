@@ -67,6 +67,29 @@ nav a:hover {
     cursor: pointer;
     color: white;
 }
+/* NAV LEFT */
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* CART LINK */
+.cart-link {
+    position: relative;
+    font-weight: 500;
+}
+
+/* CART BADGE */
+.cart-badge {
+    background: red;
+    color: white;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 50%;
+    margin-left: 5px;
+}
+
 /* ========================= COMMON ELEMENTS ========================= */
 .page-title {
     text-align: center;

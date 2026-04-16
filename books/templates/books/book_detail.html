@@ -1,16 +1,23 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/book_detail.css' %}">
+<link rel="stylesheet" href="{% static 'css/book_detail.css' %}">
 {% endblock %}
+
 {% block content %}
 
 <div class="book-detail-container">
+
     <div class="book-detail-main">
+
         <!-- ================= IMAGE CAROUSEL ================= -->
         <div class="book-gallery"
+             id="book-gallery"
              data-images="{% for img in book.get_ordered_images %}{{ img.image.url }}{% if not forloop.last %},{% endif %}{% endfor %}">
+
             <div class="main-image-container">
+
                 {% for img in book.get_ordered_images %}
                     {% if forloop.first %}
                         <img id="mainImage"
@@ -19,49 +26,78 @@
                              class="main-image">
                     {% endif %}
                 {% endfor %}
+
                 {% if book.images.count > 1 %}
-                    <button class="carousel-nav carousel-prev">&#10094;</button>
-                    <button class="carousel-nav carousel-next">&#10095;</button>
+                    <button id="carouselPrev" class="carousel-nav">&#10094;</button>
+                    <button id="carouselNext" class="carousel-nav">&#10095;</button>
                 {% endif %}
+
             </div>
+
             {% if book.images.count > 1 %}
-                <div class="thumbnail-strip">
-                    {% for img in book.get_ordered_images %}
-                        <img src="{{ img.image.url }}"
-                             class="thumbnail {% if forloop.first %}active{% endif %}"
-                             data-index="{{ forloop.counter0 }}">
-                    {% endfor %}
-                </div>
+            <div class="thumbnail-strip">
+                {% for img in book.get_ordered_images %}
+                    <img src="{{ img.image.url }}"
+                         class="thumbnail {% if forloop.first %}active{% endif %}"
+                         data-index="{{ forloop.counter0 }}">
+                {% endfor %}
+            </div>
             {% endif %}
+
         </div>
+
         <!-- ================= BOOK INFO ================= -->
         <div class="book-detail-info">
+
             <h1 class="detail-title">{{ book.title }}</h1>
             <p class="detail-author">by {{ book.author }}</p>
+
             <div class="price-section">
                 <span class="detail-price">€{{ book.price }}</span>
+
                 {% if book.stock > 0 %}
-                    <span class="stock-status in-stock">
-                        In Stock ({{ book.stock }})
-                    </span>
+                    <span class="stock-status in-stock">In Stock ({{ book.stock }})</span>
                 {% else %}
-                    <span class="stock-status out-of-stock">
-                        Out of Stock
-                    </span>
+                    <span class="stock-status out-of-stock">Out of Stock</span>
                 {% endif %}
             </div>
+
             <!-- ADD TO CART -->
             <div class="cart-section">
+
                 {% if book.stock > 0 %}
-                    <button class="add-to-cart-btn">
+
+                <form action="{% url 'orders:add_to_cart' book.id %}" method="GET">
+
+                    <div class="quantity-selector">
+
+                        <button type="button" id="qtyMinus" class="qty-btn">−</button>
+
+                        <input type="number"
+                               id="qty"
+                               name="qty"
+                               value="1"
+                               min="1"
+                               max="{{ book.stock }}">
+
+                        <button type="button" id="qtyPlus" class="qty-btn">+</button>
+
+                    </div>
+
+                    <button type="submit" class="add-to-cart-btn">
                         🛒 Add to Cart
                     </button>
+
+                </form>
+
                 {% else %}
                     <button class="add-to-cart-btn disabled" disabled>
                         Out of Stock
                     </button>
                 {% endif %}
+
             </div>
+
             <!-- Categories -->
             <div class="detail-categories">
                 <strong>Categories:</strong>
@@ -71,65 +107,55 @@
                     {% endfor %}
                 </div>
             </div>
-           <details class="description-box">
-            <summary>Read more</summary>
-            <p>{{ book.description }}</p>
-           </details>
+
+            <details class="description-box">
+                <summary>Read more</summary>
+                <p>{{ book.description }}</p>
+            </details>
+
         </div>
     </div>
-    <!-- ================= BOOK DETAILS TABLE ================= -->
+
+    <!-- TABLE -->
     <div class="book-details-table">
         <h3>Book Details</h3>
         <table>
+
             {% if book.publisher %}
-            <tr>
-                <td><strong>Publisher</strong></td>
-                <td>{{ book.publisher }}</td>
-            </tr>
+            <tr><td><strong>Publisher</strong></td><td>{{ book.publisher }}</td></tr>
             {% endif %}
 
             {% if book.page_count %}
-            <tr>
-                <td><strong>Pages</strong></td>
-                <td>{{ book.page_count }}</td>
-            </tr>
+            <tr><td><strong>Pages</strong></td><td>{{ book.page_count }}</td></tr>
             {% endif %}
 
             {% if book.cover_type %}
-            <tr>
-                <td><strong>Cover</strong></td>
-                <td>{{ book.get_cover_type_display }}</td>
-            </tr>
+            <tr><td><strong>Cover</strong></td><td>{{ book.get_cover_type_display }}</td></tr>
             {% endif %}
 
             {% if book.isbn_10 %}
-            <tr>
-                <td><strong>ISBN-10</strong></td>
-                <td>{{ book.isbn_10 }}</td>
-            </tr>
+            <tr><td><strong>ISBN-10</strong></td><td>{{ book.isbn_10 }}</td></tr>
             {% endif %}
 
             {% if book.isbn_13 %}
-            <tr>
-                <td><strong>ISBN-13</strong></td>
-                <td>{{ book.isbn_13 }}</td>
-            </tr>
+            <tr><td><strong>ISBN-13</strong></td><td>{{ book.isbn_13 }}</td></tr>
             {% endif %}
 
             {% if book.published_date %}
-            <tr>
-                <td><strong>Published</strong></td>
-                <td>{{ book.published_date }}</td>
-            </tr>
+            <tr><td><strong>Published</strong></td><td>{{ book.published_date }}</td></tr>
             {% endif %}
+
         </table>
     </div>
-    <!-- ================= SIMILAR BOOKS ================= -->
+
+    <!-- SIMILAR -->
     <div class="similar-books-section">
         <h3>Similar Books</h3>
+
         <div class="similar-books-grid">
             {% for similar in similar_books %}
                 <div class="similar-book-card">
+
                     {% with img=similar.get_primary_image %}
                         {% if img %}
                             <img src="{{ img.image.url }}">
@@ -137,6 +163,7 @@
                             <div class="no-image-small">No Image</div>
                         {% endif %}
                     {% endwith %}
+
                     <div class="similar-book-info">
                         <a href="{% url 'books:book_detail' similar.slug %}">
                             {{ similar.title }}
@@ -145,18 +172,21 @@
                             €{{ similar.price }}
                         </div>
                     </div>
+
                 </div>
             {% empty %}
-                <p class="no-recommendations">No recommendations</p>
+                <p>No recommendations</p>
             {% endfor %}
         </div>
+
     </div>
+
     <div class="back-link">
-        <a href="{% url 'books:book_list' %}" class="back-btn">
-            ← Back
-        </a>
+        <a href="{% url 'books:book_list' %}" class="back-btn">← Back</a>
     </div>
+
 </div>
 
 <script src="{% static 'js/book_detail.js' %}" defer></script>
+
 {% endblock %}

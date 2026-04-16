@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+{% endblock %}
+{% block content %}
+<div class="checkout-container">
+  <!-- LEFT -->
+  <div class="checkout-form card">
+    <h2>Delivery & Payment</h2>
+    <form method="POST" id="checkoutForm" novalidate>
+      {% csrf_token %}
+      <!-- USER -->
+      <div class="input-group">
+        <label>Full Name</label>
+        <input type="text" id="name" name="name" maxlength="50" required>
+        <div class="error-msg">Only letters allowed</div>
+      </div>
+      <div class="input-group">
+        <label>Phone</label>
+        <input type="tel" id="phone" name="phone" maxlength="10" required>
+        <div class="error-msg">Must be 10 digits</div>
+      </div>
+      <!-- ADDRESS -->
+      <h3>Delivery Address</h3>
+      <div class="input-group">
+        <label>Address</label>
+        <input type="text" id="addressSearch" placeholder="Start typing your address..." required>
+        <div id="addressResults" class="autocomplete-box"></div>
+        <div class="error-msg">Please select a valid address</div>
+      </div>
+      <!-- MAP (static) -->
+      <div class="map-container">
+        <iframe
+          src="https://www.google.com/maps?q=Athens,Greece&output=embed"
+          loading="lazy">
+        </iframe>
+      </div>
+      <!-- HIDDEN FIELDS -->
+      <input type="hidden" name="address" id="addressInput">
+      <!-- PAYMENT -->
+      <h3>Payment</h3>
+      <div class="input-group">
+        <label>Name on Card</label>
+        <input type="text" id="cardName" name="card_name" maxlength="50" required>
+        <div class="error-msg">Only letters allowed</div>
+      </div>
+      <div class="input-group">
+        <label>Card Number</label>
+        <input type="text" id="cardNumber" name="card_number" maxlength="19" required>
+        <div class="error-msg">Must be 16 digits</div>
+      </div>
+      <div class="card-row">
+        <div class="input-group">
+          <label>Expiry</label>
+          <input type="text" id="expiry" name="expiry" maxlength="5" required>
+          <div class="error-msg">MM/YY format</div>
+        </div>
+        <div class="input-group">
+          <label>CVV <i class="bi bi-credit-card-2-back"></i></label>
+          <input type="text" id="cvv" name="cvv" maxlength="3" required>
+          <div class="error-msg">3 digits</div>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Comments</label>
+        <textarea name="comments" maxlength="200"></textarea>
+      </div>
+    </form>
+  </div>
+  <!-- RIGHT -->
+  <div class="checkout-summary card">
+    <h3>Summary</h3>
+    {% for item in cart.items.all %}
+      <p>{{ item.book.title }} x{{ item.quantity }}</p>
+    {% endfor %}
+    <h2>€{{ cart.total_price }}</h2>
+    <button form="checkoutForm" type="submit" class="order-btn">
+      Place Order
+    </button>
+  </div>
+</div>
+<!-- POPUP -->
+<div id="popup" class="popup">
+  <div class="popup-content">
+    <h2>✅ Thank you!</h2>
+    <p>Your order was completed successfully.</p>
+    <a href="{% url 'home' %}" class="btn">Return Home</a>
+  </div>
+</div>
+<script src="{% static 'js/checkout.js' %}"></script>
+{% endblock %}

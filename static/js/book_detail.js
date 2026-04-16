@@ -1,94 +1,79 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
 
-    const gallery = document.querySelector(".book-gallery");
-    if (!gallery) return;
-
-    const images = gallery.dataset.images
-        ? gallery.dataset.images.split(",")
-        : [];
-
-    if (!images.length) return;
-
-    let currentIndex = 0;
-
+    // ================= GALLERY =================
+    const gallery = document.getElementById("book-gallery");
     const mainImage = document.getElementById("mainImage");
-    const prevBtn = document.querySelector(".carousel-prev");
-    const nextBtn = document.querySelector(".carousel-next");
+    const prevBtn = document.getElementById("carouselPrev");
+    const nextBtn = document.getElementById("carouselNext");
+
     const thumbnails = document.querySelectorAll(".thumbnail");
 
-    function updateImage() {
-        mainImage.src = images[currentIndex];
+    let images = [];
+    let currentIndex = 0;
 
-        thumbnails.forEach((thumb, index) => {
-            thumb.classList.toggle("active", index === currentIndex);
-        });
-    }
+    if (gallery && mainImage) {
+        images = gallery.dataset.images
+            ? gallery.dataset.images.split(",")
+            : [];
 
-    if (prevBtn && nextBtn) {
-        prevBtn.addEventListener("click", () => {
-            currentIndex = (currentIndex - 1 + images.length) % images.length;
-            updateImage();
-        });
+        function updateImage() {
+            mainImage.src = images[currentIndex];
 
-        nextBtn.addEventListener("click", () => {
-            currentIndex = (currentIndex + 1) % images.length;
-            updateImage();
-        });
-    }
-
-    thumbnails.forEach((thumb) => {
-        thumb.addEventListener("click", () => {
-            currentIndex = parseInt(thumb.dataset.index);
-            updateImage();
-        });
-    });
-
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-    const buttons = document.querySelectorAll(".read-more-btn");
-
-    buttons.forEach(btn => {
-        const targetId = btn.dataset.target;
-        const text = document.getElementById(targetId);
-
-        if (!text) return;
-
-        // STEP 1: measure full height
-        text.classList.remove("collapsed");
-        text.classList.add("expanded");
-
-        const fullHeight = text.scrollHeight;
-
-        // STEP 2: apply collapsed and measure again
-        text.classList.remove("expanded");
-        text.classList.add("collapsed");
-
-        const collapsedHeight = text.clientHeight;
-
-        // STEP 3: compare
-        if (fullHeight <= collapsedHeight + 2) {
-            // ❌ Text is SHORT → no button
-            btn.style.display = "none";
-            text.classList.remove("collapsed");
-            return;
+            thumbnails.forEach((thumb, i) => {
+                thumb.classList.toggle("active", i === currentIndex);
+            });
         }
 
-        // ✅ Text is LONG → enable button
-        btn.style.display = "inline-block";
+        if (prevBtn) {
+            prevBtn.addEventListener("click", () => {
+                currentIndex = (currentIndex - 1 + images.length) % images.length;
+                updateImage();
+            });
+        }
 
-        btn.addEventListener("click", () => {
-            const isCollapsed = text.classList.contains("collapsed");
+        if (nextBtn) {
+            nextBtn.addEventListener("click", () => {
+                currentIndex = (currentIndex + 1) % images.length;
+                updateImage();
+            });
+        }
 
-            if (isCollapsed) {
-                text.classList.remove("collapsed");
-                text.classList.add("expanded");
-                btn.textContent = "Read less";
-            } else {
-                text.classList.add("collapsed");
-                text.classList.remove("expanded");
-                btn.textContent = "Read more";
-            }
+        thumbnails.forEach((thumb) => {
+            thumb.addEventListener("click", () => {
+                currentIndex = parseInt(thumb.dataset.index);
+                updateImage();
+            });
         });
+    }
+
+    // ================= QUANTITY =================
+    const qtyInput = document.getElementById("qty");
+    const plusBtn = document.getElementById("qtyPlus");
+    const minusBtn = document.getElementById("qtyMinus");
+
+    if (!qtyInput) return;
+
+    const maxStock = parseInt(qtyInput.max) || 1;
+
+    if (plusBtn) {
+        plusBtn.addEventListener("click", () => {
+            let value = parseInt(qtyInput.value) || 1;
+            if (value < maxStock) qtyInput.value = value + 1;
+        });
+    }
+
+    if (minusBtn) {
+        minusBtn.addEventListener("click", () => {
+            let value = parseInt(qtyInput.value) || 1;
+            if (value > 1) qtyInput.value = value - 1;
+        });
+    }
+
+    qtyInput.addEventListener("input", () => {
+        let value = parseInt(qtyInput.value) || 1;
+
+        if (value > maxStock) qtyInput.value = maxStock;
+        if (value < 1) qtyInput.value = 1;
     });
+
 });

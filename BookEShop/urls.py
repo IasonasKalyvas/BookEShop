@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('books/', include('books.urls')),
     path('accounts/', include('accounts.urls')),
+    path('orders/', include('orders.urls')),
     path('', core_views.home, name='home'),
 ]
 
