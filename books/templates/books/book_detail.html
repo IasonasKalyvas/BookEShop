@@ -9,6 +9,11 @@
 
 <div class="book-detail-container">
 
+    <!-- 🔙 BACK BUTTON (TOP LEFT NOW) -->
+    <div class="back-top">
+        <a href="{% url 'books:book_list' %}" class="back-btn">← Back</a>
+    </div>
+
     <div class="book-detail-main">
 
         <!-- ================= IMAGE CAROUSEL ================= -->
@@ -116,6 +121,47 @@
         </div>
     </div>
 
+    <div class="reviews-section">
+
+    <h3 class="page-title">What Readers Are Saying</h3>
+
+    <div class="review-carousel">
+
+        <button class="review-nav review-prev">&#10094;</button>
+
+        <div class="reviews-wrapper">
+            {% for review in book.reviews.all %}
+                <div class="review-slide">
+                    <div class="review-card">
+
+                        <h4>{{ review.book.title }}</h4>
+
+                        <p><strong>{{ review.first_name }} {{ review.last_name }}</strong></p>
+
+                        <p class="stars">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= review.rating %}
+                                    ⭐
+                                {% else %}
+                                    ☆
+                                {% endif %}
+                            {% endfor %}
+                        </p>
+
+                        <p>{{ review.comment }}</p>
+
+                    </div>
+                </div>
+            {% empty %}
+                <p>No reviews for this book yet.</p>
+            {% endfor %}
+        </div>
+
+        <button class="review-nav review-next">&#10095;</button>
+
+    </div>
+</div>
+
     <!-- TABLE -->
     <div class="book-details-table">
         <h3>Book Details</h3>
@@ -179,10 +225,6 @@
             {% endfor %}
         </div>
 
-    </div>
-
-    <div class="back-link">
-        <a href="{% url 'books:book_list' %}" class="back-btn">← Back</a>
     </div>
 
 </div>

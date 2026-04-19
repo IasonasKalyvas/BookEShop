@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/reviews.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <h1 class="page-title">Leave a Review</h1>
+
+    <!-- FORM -->
+    <div class="review-form-box">
+        <form method="POST" id="reviewForm">
+            {% csrf_token %}
+
+            <label>Book:</label>
+            {{ form.book }}
+
+            <label>First Name:</label>
+            {{ form.first_name }}
+
+            <label>Last Name:</label>
+            {{ form.last_name }}
+
+            <label>Rating:</label>
+            {{ form.rating }}
+
+            <label>Review:</label>
+            {{ form.comment }}
+
+            <small id="charCount">0 / 300</small>
+
+            <button type="submit">Submit Review</button>
+        </form>
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="review-section">
+
+        <h2 class="page-title">What Readers Are Saying</h2>
+
+        <div class="review-grid">
+            {% for review in reviews %}
+                <div class="review-card">
+                    <h3>{{ review.book.title }}</h3>
+
+                    <p><strong>{{ review.first_name }} {{ review.last_name }}</strong></p>
+
+                    <p class="stars">
+                        {% for i in "12345" %}
+                            {% if forloop.counter <= review.rating %}
+                                ⭐
+                            {% else %}
+                                ☆
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+
+                    <p>{{ review.comment }}</p>
+                </div>
+            {% empty %}
+                <p>No reviews yet.</p>
+            {% endfor %}
+        </div>
+
+    </div>
+
+</div>
+
+<script src="{% static 'js/review_page.js' %}" defer></script>
+
+{% endblock %}
