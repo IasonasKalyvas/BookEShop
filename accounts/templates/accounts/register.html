@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/register.css'%}">
+{% endblock %}
+
+{% block content %}
+
+<div class="auth-wrapper">
+
+    <div class="user_card">
+
+        <h3 id="form-title">REGISTER ACCOUNT</h3>
+
+        <form method="POST" action="">
+            {% csrf_token %}
+
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                <input type="text" name="username" class="form-control" placeholder="Username..">
+            </div>
+
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
+                <input type="email" name="email" class="form-control" placeholder="Email..">
+            </div>
+
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                <input type="password" name="password1" class="form-control" placeholder="Enter password...">
+            </div>
+
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                <input type="password" name="password2" class="form-control" placeholder="Re-enter password...">
+            </div>
+
+            <input class="btn login_btn" type="submit" value="Register Account">
+        </form>
+
+        <div class="links">
+            Already have an account?
+            <a href="{% url 'accounts:login' %}">Login</a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

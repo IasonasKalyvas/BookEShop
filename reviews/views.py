@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import ReviewForm
 from .models import Review
+from reviews.models import Review
 
 
 def review_page(request):

@@ -23,7 +23,7 @@
           <p>€{{ item.book.price }}</p>
         </div>
         <div class="quantity-controls">
-          <a href="{% url 'orders:remove_from_cart' item.id %}">−</a>
+          <a href="{% url 'orders:remove_from_cart' item.book.id %}">−</a>
           <span>{{ item.quantity }}</span>
           {% if item.quantity < item.book.stock %}
           <a href="{% url 'orders:add_to_cart' item.book.id %}">+</a>

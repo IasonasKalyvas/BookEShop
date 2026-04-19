@@ -1,2 +1,41 @@
-<h1>Login Page</h1>
-<p>This is a placeholder for now</p>
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/login.css'%}">
+{% endblock %}
+
+{% block content %}
+
+<div class="auth-wrapper">
+
+    <div class="user_card">
+
+        <h3 id="form-title">LOGIN</h3>
+
+        <form method="POST" action="">
+            {% csrf_token %}
+
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                <input type="text" name="username" class="form-control" placeholder="Username...">
+            </div>
+
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                <input type="password" name="password" class="form-control" placeholder="Password...">
+            </div>
+
+            <input class="btn login_btn" type="submit" value="Login">
+        </form>
+
+        <div class="links">
+            Don't have an account?
+            <a href="{% url 'accounts:register' %}">Sign Up</a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

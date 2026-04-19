@@ -4,14 +4,58 @@ from .models import Cart, CartItem, Order, OrderItem
 from books.models import Book
 
 # Helper function
-def get_cart(user):
-    cart, created = Cart.objects.get_or_create(user=user)
-    return cart
+def get_cart(request):
+    if request.user.is_authenticated:
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        return cart
+    return None
 
 # CART PAGE
 def cart_view(request):
-    cart = get_cart(request.user)
-    items = cart.items.all()
+    # LOGGED IN
+    if request.user.is_authenticated:
+        cart = get_cart(request)
+        items = cart.items.all()
+
+        return render(request, 'orders/cart.html', {
+            'cart': cart,
+            'items': items
+        })
+
+    # GUEST (unchanged)
+    session_cart = request.session.get('cart', {})
+
+    class TempItem:
+        def __init__(self, book, quantity):
+            self.book = book
+            self.quantity = quantity
+
+        def total_price(self):
+            return self.book.price * self.quantity
+
+    items = []
+    total = 0
+
+    for book_id, qty in session_cart.items():
+        book = Book.objects.get(id=book_id)
+        item = TempItem(book, qty)
+        items.append(item)
+        total += item.total_price()
+
+    class TempCart:
+        def __init__(self, items, total):
+            self._items = items
+            self._total = total
+
+        @property
+        def items(self):
+            return self._items
+
+        def total_price(self):
+            return self._total
+
+    cart = TempCart(items, total)
+
     return render(request, 'orders/cart.html', {
         'cart': cart,
         'items': items
@@ -20,57 +64,139 @@ def cart_view(request):
 # ADD TO CART
 def add_to_cart(request, book_id):
     book = get_object_or_404(Book, id=book_id)
-    cart = get_cart(request.user)
-    item, created = CartItem.objects.get_or_create(
-        cart=cart,
-        book=book
-    )
     qty = int(request.GET.get("qty", 1))
-    if not created:
-        item.quantity += qty    
+
+    # ================= LOGGED IN =================
+    if request.user.is_authenticated:
+        cart = get_cart(request)
+
+        item, created = CartItem.objects.get_or_create(
+            cart=cart,
+            book=book
+        )
+
+        if not created:
+            item.quantity += qty
+        else:
+            item.quantity = qty
+
+        item.save()
+
+    # ================= GUEST =================
     else:
-        item.quantity = qty
-    item.save()
+        cart = request.session.get('cart', {})
+
+        if str(book_id) in cart:
+            cart[str(book_id)] += qty
+        else:
+            cart[str(book_id)] = qty
+
+        request.session['cart'] = cart
+
     return redirect('orders:cart')
 
-# REMOVE FROM CART
-def remove_from_cart(request, item_id):
-    item = get_object_or_404(CartItem, id=item_id)
+def remove_from_cart(request, book_id):
+    # LOGGED IN USERS
+    if request.user.is_authenticated:
+        cart = get_cart(request)
 
-    if item.quantity > 1:
-        item.quantity -= 1
-        item.save()
+        item = CartItem.objects.filter(cart=cart, book_id=book_id).first()
+
+        if item:
+            if item.quantity > 1:
+                item.quantity -= 1
+                item.save()
+            else:
+                item.delete()
+
+    # GUEST USERS
     else:
-        item.delete()
+        cart = request.session.get('cart', {})
+
+        if str(book_id) in cart:
+            if cart[str(book_id)] > 1:
+                cart[str(book_id)] -= 1
+            else:
+                del cart[str(book_id)]
+
+        request.session['cart'] = cart
 
     return redirect('orders:cart')
 
 def checkout(request):
-    cart = get_cart(request.user)
-    if cart.total_price() <= 0:
-        messages.error(request, "Your cart is empty.")
-        return redirect("orders:cart")
+
+    # ================= GUEST + LOGGED-IN SUPPORT =================
+    if request.user.is_authenticated:
+        cart = get_cart(request)
+        items = cart.items.all()
+        total = cart.total_price()
+
+    else:
+        session_cart = request.session.get('cart', {})
+
+        if not session_cart:
+            messages.error(request, "Your cart is empty.")
+            return redirect("orders:cart")
+
+        items = []
+        total = 0
+
+        class TempItem:
+            def __init__(self, book, quantity):
+                self.book = book
+                self.quantity = quantity
+
+            def total_price(self):
+                return self.book.price * self.quantity
+
+        for book_id, qty in session_cart.items():
+            book = Book.objects.get(id=book_id)
+            item = TempItem(book, qty)
+            items.append(item)
+            total += item.total_price()
+
+    # ================= POST (CREATE ORDER) =================
     if request.method == "POST":
-        # CREATE ORDER
+
         order = Order.objects.create(
-            user=request.user,
-            total_price=cart.total_price()
+            user=request.user if request.user.is_authenticated else None,
+            total_price=total
         )
-        for item in cart.items.all():
-            # CREATE ORDER ITEM
-            OrderItem.objects.create(
-                order=order,
-                book=item.book,
-                quantity=item.quantity,
-                price=item.book.price
-            )
-            # REDUCE STOCK
-            item.book.stock -= item.quantity
-            item.book.save()
-        # CLEAR CART AFTER EVERYTHING
-        cart.items.all().delete()
+
+        # LOGGED-IN CART
+        if request.user.is_authenticated:
+            for item in items:
+                OrderItem.objects.create(
+                    order=order,
+                    book=item.book,
+                    quantity=item.quantity,
+                    price=item.book.price
+                )
+
+                item.book.stock -= item.quantity
+                item.book.save()
+
+            cart.items.all().delete()
+
+        # GUEST CART
+        else:
+            for item in items:
+                OrderItem.objects.create(
+                    order=order,
+                    book=item.book,
+                    quantity=item.quantity,
+                    price=item.book.price
+                )
+
+                item.book.stock -= item.quantity
+                item.book.save()
+
+            request.session['cart'] = {}  # clear guest cart
+
         messages.success(request, "Order completed!")
-        return redirect("home")  # or wherever you want
+        return redirect("home")
+
     return render(request, "orders/checkout.html", {
-        "cart": cart
+        "items": items,
+        "total": total
     })

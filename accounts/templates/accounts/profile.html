@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+
+<div class="auth-wrapper">
+
+    <div class="user_card">
+
+        <h3 id="form-title">My Profile</h3>
+
+        <p><strong>Username:</strong> {{ request.user.username }}</p>
+        <p><strong>Email:</strong> {{ request.user.email }}</p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="input-group">
+                <span class="input-group-text">📍</span>
+                {{ form.address }}
+            </div>
+
+            <div class="input-group">
+                <span class="input-group-text">📞</span>
+                {{ form.phone }}
+            </div>
+
+            <input class="btn login_btn" type="submit" value="Update Profile">
+        </form>
+
+        <div class="links">
+            <a href="{% url 'accounts:logout' %}">Logout</a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
