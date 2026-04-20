@@ -3,17 +3,41 @@
 
 {% block title %}Profile{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
 {% block content %}
 
 <div class="auth-wrapper">
 
     <div class="user_card">
 
+        <!-- SUCCESS MESSAGE -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="success-message">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
         <h3 id="form-title">My Profile</h3>
 
-        <p><strong>Username:</strong> {{ request.user.username }}</p>
-        <p><strong>Email:</strong> {{ request.user.email }}</p>
+        <!-- USER INFO -->
+        <div class="profile-info">
+            <p><strong>Username:</strong> {{ request.user.username }}</p>
+            <p><strong>Email:</strong> {{ request.user.email }}</p>
+        </div>
 
+        <!-- ERROR MESSAGE -->
+        {% if form.errors %}
+            <div class="error-message">
+                {{ form.errors.as_text|striptags }}
+            </div>
+        {% endif %}
+
+        <!-- FORM -->
         <form method="POST">
             {% csrf_token %}
 
@@ -27,12 +51,30 @@
                 {{ form.phone }}
             </div>
 
-            <input class="btn login_btn" type="submit" value="Update Profile">
+            <button type="submit" class="btn update-btn">
+                Update Profile
+            </button>
         </form>
 
-        <div class="links">
-            <a href="{% url 'accounts:logout' %}">Logout</a>
+        <!-- WISHLIST -->
+        <div class="wishlist-box">
+            <h4>❤️  Wishlist</h4>
+
+            {% if profile.favorite_books.all %}
+                {% for book in profile.favorite_books.all %}
+                    <div class="wishlist-item">
+                        {{ book.title }}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="empty-wishlist">No books in wishlist yet.</p>
+            {% endif %}
         </div>
+
+        <!-- LOGOUT -->
+        <a href="{% url 'accounts:logout' %}" class="logout-btn">
+            Logout
+        </a>
 
     </div>
 

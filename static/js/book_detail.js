@@ -82,4 +82,49 @@ document.addEventListener("DOMContentLoaded", () => {
         window.addEventListener("resize", updateReviews);
     }
 
+// ================= WISHLIST =================
+const wishlistBtn = document.getElementById("wishlistBtn");
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+const csrftoken = getCookie("csrftoken");
+
+if (wishlistBtn) {
+    wishlistBtn.addEventListener("click", () => {
+
+        const bookId = wishlistBtn.dataset.bookId;
+
+        fetch(`/accounts/wishlist/toggle/${bookId}/`, {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": csrftoken,
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === "added") {
+                wishlistBtn.textContent = "💖";
+            } else {
+                wishlistBtn.textContent = "🤍";
+            }
+        })
+        .catch(err => console.error(err));
+    });
+}
+
+
 });
+

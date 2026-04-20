@@ -51,6 +51,9 @@
 
         </div>
 
+
+        
+
         <!-- ================= BOOK INFO ================= -->
         <div class="book-detail-info">
 
@@ -59,6 +62,16 @@
 
             <div class="price-section">
                 <span class="detail-price">€{{ book.price }}</span>
+                 <div class="wishlist-action">
+            {% if user.is_authenticated %}
+            <button id="wishlistBtn"
+                data-book-id="{{ book.id }}"
+                class="wishlist-btn">
+                ❤️
+                </button>
+            {% endif %}
+        </div>
+            
 
                 {% if book.stock > 0 %}
                     <span class="stock-status in-stock">In Stock ({{ book.stock }})</span>
@@ -219,7 +232,8 @@
                         </div>
                     </div>
 
-                </div>
+                </div>    
+
             {% empty %}
                 <p>No recommendations</p>
             {% endfor %}

@@ -97,3 +97,13 @@ html, body {
 .links a:hover {
     text-decoration: underline;
 }
+
+.form-error {
+    background: rgba(255, 0, 0, 0.08);
+    color: #b30000;
+    border: 1px solid rgba(255, 0, 0, 0.25);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 14px;
+    text-align: center;
+}

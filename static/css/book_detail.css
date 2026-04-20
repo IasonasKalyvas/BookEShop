@@ -272,3 +272,11 @@
     .book-detail-main { grid-template-columns: 1fr; }
     .similar-books-grid { grid-template-columns: repeat(3, 1fr); }
 }
+
+.wishlist-btn {
+    font-size: 28px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}

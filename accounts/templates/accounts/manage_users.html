@@ -1,0 +1,32 @@
+{% extends "accounts/dashboard_base.html" %}
+
+{% block dashboard_content %}
+
+<h1>Manage Users</h1>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for u in users %}
+    <tr>
+        <td>{{ u.username }}</td>
+        <td>{{ u.email }}</td>
+        <td>
+
+            {% if not u.is_superuser %}
+                <a href="{% url 'accounts:promote_user' u.id %}">Promote</a>
+                <a href="{% url 'accounts:demote_user' u.id %}">Demote</a>
+            {% else %}
+                <em>Admin</em>
+            {% endif %}
+
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

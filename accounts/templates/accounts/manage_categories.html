@@ -1,0 +1,20 @@
+<h1>Manage Categories</h1>
+
+<a href="{% url 'books:add_category' %}">Add Category</a>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for c in categories %}
+    <tr>
+        <td>{{ c.name }}</td>
+        <td>
+            <a href="{% url 'books:edit_category' c.id %}">Edit</a>
+            <a href="{% url 'books:delete_category' c.id %}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

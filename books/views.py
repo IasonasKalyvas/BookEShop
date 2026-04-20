@@ -2,6 +2,9 @@ from django.shortcuts import render, get_object_or_404
 from .models import Book, Category
 from django.utils import timezone 
 import random
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Category
+
 
 def get_categories():
     """
@@ -9,6 +12,40 @@ def get_categories():
     Always fetch categories so filters are ALWAYS visible
     """
     return Category.objects.all()
+
+def category_list(request):
+    categories = Category.objects.all()
+    return render(request, "books/category_list.html", {
+        "categories": categories
+    })
+
+def add_category(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        if name:
+            Category.objects.create(name=name)
+            return redirect("books:category_list")
+
+    return render(request, "books/category_form.html")
+
+def edit_category(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+
+    if request.method == "POST":
+        category.name = request.POST.get("name")
+        category.save()
+        return redirect("books:category_list")
+
+    return render(request, "books/category_form.html", {
+        "category": category
+    })
+
+def delete_category(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+    category.delete()
+    return redirect("books:category_list")
+
+
 
 
 def book_list(request):

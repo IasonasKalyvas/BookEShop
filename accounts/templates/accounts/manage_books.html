@@ -1,0 +1,28 @@
+{% extends "accounts/dashboard_base.html" %}
+
+{% block dashboard_content %}
+
+<h1>Manage Books</h1>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>Title</th>
+        <th>Stock</th>
+        <th>Price</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for book in books %}
+    <tr>
+        <td>{{ book.title }}</td>
+        <td>{{ book.stock }}</td>
+        <td>{{ book.price }}</td>
+        <td>
+            <a href="#">Edit</a>
+            <a href="#">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
