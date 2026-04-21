@@ -2,6 +2,8 @@ from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Cart, CartItem, Order, OrderItem
 from books.models import Book
+from accounts.utils import log_activity
+
 
 # Helper function
 def get_cart(request):
@@ -82,6 +84,7 @@ def add_to_cart(request, book_id):
 
         item.save()
 
+
     # ================= GUEST =================
     else:
         cart = request.session.get('cart', {})
@@ -107,7 +110,7 @@ def remove_from_cart(request, book_id):
                 item.quantity -= 1
                 item.save()
             else:
-                item.delete()
+                item.delete()      
 
     # GUEST USERS
     else:

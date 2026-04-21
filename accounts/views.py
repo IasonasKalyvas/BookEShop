@@ -105,7 +105,6 @@ def toggle_wishlist(request, book_id):
 
     if book in profile.favorite_books.all():
         profile.favorite_books.remove(book)
-
         UserActivity.objects.create(
             user=request.user,
             action='wishlist_remove',
@@ -115,7 +114,6 @@ def toggle_wishlist(request, book_id):
         return JsonResponse({'status': 'removed'})
     else:
         profile.favorite_books.add(book)
-
         UserActivity.objects.create(
             user=request.user,
             action='wishlist_add',

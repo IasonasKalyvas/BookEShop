@@ -17,6 +17,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     console.log("Dark mode button:", darkModeToggle);
 
+    // ✅ Apply saved dark mode on page load
+    if (localStorage.getItem("darkMode") === "enabled") {
+        document.body.classList.add("dark-mode");
+        if (darkModeToggle) darkModeToggle.textContent = "☀️";
+    }
+
     if (darkModeToggle) {
         darkModeToggle.addEventListener("click", function () {
             console.log("🔥 DARK MODE CLICKED");
@@ -25,8 +31,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (document.body.classList.contains("dark-mode")) {
                 darkModeToggle.textContent = "☀️";
+                localStorage.setItem("darkMode", "enabled");
             } else {
                 darkModeToggle.textContent = "🌙";
+                localStorage.setItem("darkMode", "disabled");
             }
         });
     }
