@@ -1,0 +1,75 @@
+.top-bar {
+    margin-bottom: 15px;
+}
+
+.btn-add {
+    padding: 8px 12px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.book-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.book-table th,
+.book-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+.book-table th {
+    background-color: #f4f4f4;
+}
+
+.search-bar {
+    margin: 15px 0;
+    display: flex;
+    gap: 10px;
+}
+
+.search-bar input {
+    padding: 8px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-bar button {
+    padding: 8px 12px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-bar a {
+    padding: 8px 10px;
+    text-decoration: none;
+    color: red;
+}
+
+.clear-btn {
+    padding: 8px 10px;
+    text-decoration: none;
+    color: red;
+}
+
+.out-of-stock-title {
+    margin-top: 30px;
+    color: #c62828;
+}
+
+.stock-zero {
+    color: red;
+    font-weight: bold;
+}
+
+.no-stock-msg {
+    margin-top: 10px;
+}

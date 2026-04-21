@@ -72,10 +72,10 @@
   <!-- RIGHT -->
   <div class="checkout-summary card">
     <h3>Summary</h3>
-    {% for item in cart.items.all %}
+    {% for item in cart_items %}
       <p>{{ item.book.title }} x{{ item.quantity }}</p>
     {% endfor %}
-    <h2>€{{ cart.total_price }}</h2>
+    <h2>€{{ total }}</h2>
     <button form="checkoutForm" type="submit" class="order-btn">
       Place Order
     </button>

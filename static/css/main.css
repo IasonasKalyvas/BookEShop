@@ -33,6 +33,27 @@ main {
     padding: 20px;
 }
 /* ========================= NAVBAR ========================= */
+
+/* ========================= LOGO ========================= */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+    color: white;
+}
+
+.logo-icon {
+    font-size: 20px;
+}
+
+/* optional: make logo slightly stronger than nav links */
+.logo-text {
+    letter-spacing: 0.5px;
+}
+
 nav {
     display: flex;
     justify-content: space-between;
@@ -171,3 +192,81 @@ button:hover {
 .footer-links a:hover {
     text-decoration: underline;
 }
+
+/* ========================= DARK MODE ========================= */
+body.dark-mode {
+    background: #121417;
+    color: #e6e6e6;
+}
+
+/* ========================= NAVBAR ========================= */
+body.dark-mode nav {
+    background: #1b1f24;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode nav a {
+    color: #e6e6e6;
+}
+
+body.dark-mode nav a:hover {
+    color: #ffffff;
+}
+
+/* ========================= FOOTER ========================= */
+body.dark-mode .footer {
+    background: #1b1f24;
+    color: #e6e6e6;
+}
+
+/* ========================= TABLES ========================= */
+body.dark-mode table {
+    background: #1a1d22;
+    color: #e6e6e6;
+    border-collapse: collapse;
+}
+
+body.dark-mode th {
+    background: #222831;
+    color: #ffffff;
+}
+
+body.dark-mode td {
+    border: 1px solid #2c3440;
+}
+
+/* ========================= LINKS ========================= */
+body.dark-mode a {
+    color: #8ab4f8;
+}
+
+body.dark-mode a:hover {
+    color: #ffffff;
+}
+
+/* ========================= BUTTONS ========================= */
+body.dark-mode button {
+    background: #2c3440;
+    color: #ffffff;
+}
+
+body.dark-mode button:hover {
+    background: #3a4654;
+}
+
+/* ========================= CARDS / CONTAINERS ========================= */
+body.dark-mode .container,
+body.dark-mode .card {
+    background: #1a1d22;
+    border-radius: 10px;
+}
+
+/* ========================= INPUTS (if you have forms/search) ========================= */
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+    background: #1a1d22;
+    color: #e6e6e6;
+    border: 1px solid #2c3440;
+}
+

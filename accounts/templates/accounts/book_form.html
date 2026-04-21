@@ -1,0 +1,15 @@
+{% extends "dashboard_base.html" %}
+
+{% block dashboard_content %}
+
+<h2>{% if form.instance.pk %}Edit Book{% else %}Add Book{% endif %}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    
+    {{ form.as_p }}
+
+    <button type="submit">Save</button>
+</form>
+
+{% endblock %}

@@ -1,8 +1,21 @@
-<h1>Manage Categories</h1>
+{% extends "dashboard_base.html" %}
+{% load static %}
 
-<a href="{% url 'books:add_category' %}">Add Category</a>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/manage_categories.css' %}">
+{% endblock %}
 
-<table>
+{% block dashboard_content %}
+
+<h1 class="page-title">Manage Categories</h1>
+
+<form method="POST" action="{% url 'books:add_category' %}" class="category-form">
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="New category name" required>
+    <button type="submit">➕ Add Category</button>
+</form>
+
+<table class="category-table">
     <tr>
         <th>Name</th>
         <th>Actions</th>
@@ -11,10 +24,23 @@
     {% for c in categories %}
     <tr>
         <td>{{ c.name }}</td>
+
         <td>
-            <a href="{% url 'books:edit_category' c.id %}">Edit</a>
-            <a href="{% url 'books:delete_category' c.id %}">Delete</a>
+            <form method="POST"
+                  action="{% url 'books:edit_category' c.id %}"
+                  class="inline-form">
+                {% csrf_token %}
+                <input type="text" name="name" value="{{ c.name }}">
+                <button type="submit">Edit</button>
+            </form>
+
+            <a href="{% url 'books:delete_category' c.id %}"
+               onclick="return confirm('Delete this category?');">
+                Delete
+            </a>
         </td>
     </tr>
     {% endfor %}
 </table>
+
+{% endblock %}

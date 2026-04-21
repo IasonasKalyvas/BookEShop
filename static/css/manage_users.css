@@ -1,0 +1,32 @@
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.user-table th,
+.user-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+.user-table th {
+    background-color: #f4f4f4;
+}
+
+.role-admin {
+    color: #6a1b9a;
+    font-weight: bold;
+}
+
+.action-links a {
+    margin-right: 5px;
+}
+
+.locked {
+    color: #999;
+}
+
+.self-user {
+    color: #2f5d3f;
+    font-weight: bold;
+}

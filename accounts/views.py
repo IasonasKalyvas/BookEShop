@@ -130,27 +130,13 @@ def dashboard(request):
     user = request.user
 
     if is_admin(user):
-        return redirect('accounts:admin_dashboard')
+        return redirect('accounts:manage_categories')  
 
     if is_manager(user):
-        return redirect('accounts:manager_dashboard')
+        return redirect('accounts:manage_books')
 
-    return redirect('accounts:profile')    
+    return redirect('accounts:profile')   
 
-@login_required
-def manager_dashboard(request):
-    if not request.user.groups.filter(name="manager").exists() and not request.user.is_superuser:
-        return redirect('accounts:profile')
-
-    return render(request, "accounts/manager_dashboard.html")
-
-
-@login_required
-def admin_dashboard(request):
-    if not request.user.is_superuser:
-        return redirect('accounts:profile')
-
-    return render(request, "accounts/admin_dashboard.html")
 
 def manager_required(user):
     return user.is_superuser or user.groups.filter(name="manager").exists()
@@ -158,26 +144,54 @@ def manager_required(user):
 
 @user_passes_test(manager_required)
 def manage_books(request):
+    query = request.GET.get("q")
+
     books = Book.objects.all()
-    return render(request, "accounts/manage_books.html", {"books": books})
+
+    if query:
+        books = books.filter(title__icontains=query)
+
+    # 👇 NEW: out of stock books
+    out_of_stock_books = Book.objects.filter(stock=0)
+
+    return render(request, "accounts/manage_books.html", {
+        "books": books,
+        "out_of_stock_books": out_of_stock_books,
+        "query": query
+    })
 
 @user_passes_test(manager_required)
 def manage_users(request):
     users = User.objects.all()
-    return render(request, "accounts/manage_users.html", {"users": users})
+
+    for u in users:
+        if u.is_superuser:
+            u.role = "Admin"
+        elif u.groups.filter(name="manager").exists():
+            u.role = "Manager"
+        else:
+            u.role = "User"   # ✅ FIX: default role
+
+    return render(request, "accounts/manage_users.html", {
+        "users": users
+    })
 
 
 @user_passes_test(manager_required)
 def promote_user(request, user_id):
-    if not request.user.groups.filter(name="manager").exists() and not request.user.is_superuser:
-        return redirect("accounts:profile")
-
     user = get_object_or_404(User, id=user_id)
 
+    # ❌ cannot change yourself
+    if user == request.user:
+        return redirect("accounts:manage_users")
+
+    # ❌ never touch admin
     if user.is_superuser:
         return redirect("accounts:manage_users")
 
     manager_group = Group.objects.get(name="manager")
+
+    user.groups.clear()
     user.groups.add(manager_group)
 
     return redirect("accounts:manage_users")
@@ -187,13 +201,20 @@ def promote_user(request, user_id):
 def demote_user(request, user_id):
     user = get_object_or_404(User, id=user_id)
 
+    # ❌ cannot change yourself
+    if user == request.user:
+        return redirect("accounts:manage_users")
+
+    # ❌ never touch admin
     if user.is_superuser:
         return redirect("accounts:manage_users")
 
     manager_group = Group.objects.get(name="manager")
+
     user.groups.remove(manager_group)
 
     return redirect("accounts:manage_users")
+
 
 @user_passes_test(manager_required)
 def add_book(request):
@@ -232,3 +253,15 @@ def manage_categories(request):
     return render(request, "accounts/manage_categories.html", {
         "categories": categories
     })
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def delete_user(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+
+    # Admin cannot delete themselves (optional safety)
+    if user == request.user:
+        return redirect("accounts:manage_users")
+
+    user.delete()
+    return redirect("accounts:manage_users")

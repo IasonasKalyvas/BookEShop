@@ -1,10 +1,32 @@
-{% extends "accounts/dashboard_base.html" %}
+{% extends "dashboard_base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/manage_books.css' %}">
+{% endblock %}
 
 {% block dashboard_content %}
 
 <h1>Manage Books</h1>
 
-<table border="1" cellpadding="8">
+<div class="top-bar">
+    <a href="{% url 'accounts:add_book' %}" class="btn-add">+ Add Book</a>
+</div>
+
+<form method="GET" class="search-bar">
+    <input type="text"
+           name="q"
+           placeholder="Search books by title..."
+           value="{{ query|default:'' }}">
+
+    <button type="submit">Search</button>
+
+    {% if query %}
+        <a href="{% url 'accounts:manage_books' %}" class="clear-btn">Clear</a>
+    {% endif %}
+</form>
+
+<table class="book-table">
     <tr>
         <th>Title</th>
         <th>Stock</th>
@@ -18,11 +40,38 @@
         <td>{{ book.stock }}</td>
         <td>{{ book.price }}</td>
         <td>
-            <a href="#">Edit</a>
-            <a href="#">Delete</a>
+            <a href="{% url 'accounts:edit_book' book.id %}">Edit</a>
+            <a href="{% url 'accounts:delete_book' book.id %}">Delete</a>
         </td>
     </tr>
     {% endfor %}
 </table>
+
+<h2 class="out-of-stock-title">Out of Stock</h2>
+
+{% if out_of_stock_books %}
+<table class="book-table">
+    <tr>
+        <th>Title</th>
+        <th>Stock</th>
+        <th>Price</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for book in out_of_stock_books %}
+    <tr>
+        <td>{{ book.title }}</td>
+        <td class="stock-zero">{{ book.stock }}</td>
+        <td>{{ book.price }}</td>
+        <td>
+            <a href="{% url 'accounts:edit_book' book.id %}">Edit</a>
+            <a href="{% url 'accounts:delete_book' book.id %}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p class="no-stock-msg">No books are out of stock</p>
+{% endif %}
 
 {% endblock %}

@@ -9,8 +9,7 @@
         <h3>Dashboard</h3>
 
         <ul>
-            <li><a href="{% url 'accounts:admin_dashboard' %}">Categories</a></li>
-
+            <li><a href="{% url 'accounts:manage_categories' %}">Categories</a></li>
             {% if is_manager %}
                 <li><a href="{% url 'accounts:manage_books' %}">Manage Books</a></li>
                 <li><a href="{% url 'accounts:manage_users' %}">Manage Users</a></li>

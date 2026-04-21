@@ -197,6 +197,7 @@ def checkout(request):
         return redirect("home")
 
     return render(request, "orders/checkout.html", {
-        "items": items,
-        "total": total
-    })
+    "items": items,
+    "total": total,
+    "cart_items": items
+})

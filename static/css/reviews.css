@@ -56,3 +56,25 @@
         grid-template-columns: 1fr;
     }
 }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.pagination a {
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #2f5d3f;
+    color: white;
+    text-decoration: none;
+}
+
+.pagination strong {
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #3c7a52;
+    color: white;
+}

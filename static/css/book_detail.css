@@ -47,12 +47,12 @@
     border: none;
 }
 
-/* LEFT arrow (previous image) */
+/* LEFT arrow */
 #carouselPrev {
     left: 12px;
 }
 
-/* RIGHT arrow (next image) */
+/* RIGHT arrow */
 #carouselNext {
     right: 12px;
 }
@@ -203,18 +203,24 @@
     border-top: 5px solid #2f5d3f;
 }
 
-/* ================= REVIEW SECTION (FIXED ONLY) ================= */
+/* ================= REVIEW SECTION (FIXED) ================= */
 .reviews-section {
     background: white;
     padding: 25px;
     border-radius: 16px;
     margin-bottom: 40px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+
+    /* ADDED FIX */
+    position: relative;
 }
 
 .review-carousel {
     position: relative;
     overflow: hidden;
+
+    /* ADDED FIX */
+    padding: 0 30px;
 }
 
 .reviews-wrapper {
@@ -230,6 +236,13 @@
     justify-content: center;
 }
 
+/* EMPTY STATE FIX */
+.reviews-wrapper p {
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+}
+
 .review-card {
     width: 80%;
     background: #fafafa;
@@ -238,7 +251,7 @@
     border: 1px solid #e0ddd7;
 }
 
-/* arrows unchanged but safe */
+/* ================= REVIEW ARROWS FIX ================= */
 .review-nav {
     position: absolute;
     top: 50%;
@@ -251,12 +264,22 @@
     border-radius: 50%;
     cursor: pointer;
     z-index: 10;
+
+    /* NICE TOUCH */
+    opacity: 0.95;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
-.review-prev { left: 10px; }
-.review-next { right: 10px; }
+/* PUSH OUTSIDE TEXT AREA */
+.review-prev {
+    left: 10px;
+}
 
-/* ================= BACK BUTTON (UNCHANGED) ================= */
+.review-next {
+    right: 10px;
+}
+
+/* ================= BACK BUTTON ================= */
 .back-btn {
     display: inline-block;
     padding: 10px 18px;
@@ -279,4 +302,15 @@
     border: none;
     cursor: pointer;
     margin-top: 10px;
+}
+
+.quantity-selector input[type="number"]::-webkit-outer-spin-button,
+.quantity-selector input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.quantity-selector input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+    appearance: textfield;
 }

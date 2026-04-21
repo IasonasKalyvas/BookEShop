@@ -4,7 +4,7 @@ from django.utils import timezone
 import random
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Category
-
+from django.core.paginator import Paginator
 
 def get_categories():
     """
@@ -13,32 +13,38 @@ def get_categories():
     """
     return Category.objects.all()
 
+# ================= CATEGORY MANAGEMENT (FIXED) =================
+
 def category_list(request):
     categories = Category.objects.all()
-    return render(request, "books/category_list.html", {
+    return render(request, "accounts/manage_categories.html", {
         "categories": categories
     })
+
 
 def add_category(request):
     if request.method == "POST":
         name = request.POST.get("name")
         if name:
             Category.objects.create(name=name)
-            return redirect("books:category_list")
+        return redirect("books:category_list")
 
-    return render(request, "books/category_form.html")
+    return redirect("books:category_list")
+
 
 def edit_category(request, pk):
     category = get_object_or_404(Category, pk=pk)
 
     if request.method == "POST":
-        category.name = request.POST.get("name")
-        category.save()
+        name = request.POST.get("name")
+        if name:
+            category.name = name
+            category.save()
+
         return redirect("books:category_list")
 
-    return render(request, "books/category_form.html", {
-        "category": category
-    })
+    return redirect("books:category_list")
+
 
 def delete_category(request, pk):
     category = get_object_or_404(Category, pk=pk)
@@ -49,30 +55,33 @@ def delete_category(request, pk):
 
 
 def book_list(request):
-    """
-    Show all books (default page)
-    Handles homepage + filter consistency
-    """
-
     books = Book.objects.filter(stock__gt=0)
 
     selected_genres = request.GET.getlist('genre')
     single_genre = request.GET.get('genre')
     selected_date = request.GET.get('date_filter')
 
-    # 🟢 SINGLE GENRE (homepage clicks)
+    # 🟢 SINGLE GENRE
     if single_genre:
         books = books.filter(categories__name__iexact=single_genre)
 
-    # 🟢 MULTI GENRE (checkbox filters)
+    # 🟢 MULTI GENRE
     if selected_genres:
         books = books.filter(categories__name__in=selected_genres).distinct()
 
+    # =========================
+    # ✅ PAGINATION (16 per page)
+    # =========================
+    paginator = Paginator(books, 16)   # 16 books per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     return render(request, 'books/book_list.html', {
-        'books': books,
+        'books': page_obj,   # IMPORTANT: now paginated
         'categories': get_categories(),
         'selected_genres': selected_genres,
-        'selected_date': selected_date
+        'selected_date': selected_date,
+        'page_obj': page_obj
     })
 
 

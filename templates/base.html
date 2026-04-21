@@ -18,7 +18,10 @@
     <nav>
     <!-- LEFT SIDE -->
     <div class="nav-left">
-        <a href="{% url 'home' %}" class="logo">📚 BookEShop</a>
+        <a href="{% url 'home' %}" class="logo">
+        <span class="logo-icon">📚</span>
+        <span class="logo-text">Shelfy</span>
+        </a>
 
         <a href="{% url 'home' %}">Home</a>
         <a href="{% url 'books:book_list' %}">Search</a>
@@ -39,19 +42,17 @@
     </a>
 
     <!-- PROFILE + ROLE LINKS -->
-    {% if user.is_authenticated %}
+{% if user.is_authenticated %}
 
-        <a href="{% url 'accounts:profile' %}" class="icon-btn">👤</a>
+    <a href="{% url 'accounts:profile' %}" class="icon-btn">👤</a>
 
-        {% if is_admin %}
-            <a href="{% url 'accounts:admin_dashboard' %}">Admin</a>
-        {% elif is_manager %}
-            <a href="{% url 'accounts:manager_dashboard' %}">Manager</a>
-        {% endif %}
-
-    {% else %}
-        <a href="{% url 'accounts:login' %}" class="icon-btn">👤</a>
+    {% if is_admin or is_manager %}
+        <a href="{% url 'accounts:dashboard' %}">Dashboard</a>
     {% endif %}
+
+{% else %}
+    <a href="{% url 'accounts:login' %}" class="icon-btn">👤</a>
+{% endif %}
 
     <!-- DARK MODE -->
     <button id="darkModeToggle" class="icon-btn">
@@ -73,11 +74,6 @@
     <footer class="footer">
         <div class="footer-container">
             <p>© 2026 BookEShop. All rights reserved.</p>
-            <div class="footer-links">
-                <a href="#">About</a>
-                <a href="#">Contact</a>
-                <a href="#">Support</a>
-            </div>
         </div>
     </footer>
 

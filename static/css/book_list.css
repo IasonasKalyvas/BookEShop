@@ -73,3 +73,25 @@
     .filter-bar { flex-direction: column; }
     .filter-bar input, .dropdown { width: 100%; }
 }
+
+.pagination {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.pagination a {
+    margin: 0 5px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    background: #2f5d3f;
+    color: white;
+}
+
+.pagination strong {
+    margin: 0 5px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #3c7a52;
+    color: white;
+}
