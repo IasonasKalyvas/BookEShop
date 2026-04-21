@@ -84,6 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ================= WISHLIST =================
 const wishlistBtn = document.getElementById("wishlistBtn");
+const wishlistPopup = document.getElementById("wishlistPopup");
 
 function getCookie(name) {
     let cookieValue = null;
@@ -102,10 +103,22 @@ function getCookie(name) {
 
 const csrftoken = getCookie("csrftoken");
 
-if (wishlistBtn) {
-    wishlistBtn.addEventListener("click", () => {
+// 🔥 SHOW POPUP FUNCTION
+function showPopup(message) {
+    if (!wishlistPopup) return;
 
-        const bookId = wishlistBtn.dataset.bookId;
+    wishlistPopup.textContent = message;
+    wishlistPopup.classList.add("show");
+
+    setTimeout(() => {
+        wishlistPopup.classList.remove("show");
+    }, 2000);
+}
+
+if (wishlistBtn) {
+    wishlistBtn.addEventListener("click", function () {
+
+        const bookId = wishlistBtn.getAttribute("data-book-id");
 
         fetch(`/accounts/wishlist/toggle/${bookId}/`, {
             method: "POST",
@@ -115,11 +128,15 @@ if (wishlistBtn) {
         })
         .then(res => res.json())
         .then(data => {
+
             if (data.status === "added") {
                 wishlistBtn.textContent = "💖";
+                showPopup("Book successfully added to wishlist");
             } else {
                 wishlistBtn.textContent = "🤍";
+                showPopup("Book successfully removed from wishlist");
             }
+
         })
         .catch(err => console.error(err));
     });

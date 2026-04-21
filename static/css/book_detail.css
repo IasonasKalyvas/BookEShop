@@ -314,3 +314,24 @@
     -moz-appearance: textfield; /* Firefox */
     appearance: textfield;
 }
+
+/* ================= WISHLIST POPUP ================= */
+.wishlist-popup {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #2f5d3f;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    z-index: 9999;
+}
+
+.wishlist-popup.show {
+    opacity: 1;
+    transform: translateY(0);
+}
