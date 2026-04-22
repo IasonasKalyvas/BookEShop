@@ -1,84 +1,77 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
+    <!-- Meta tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Online Book Shop">
     <meta name="keywords" content="books, shop, online">
     <meta name="author" content="Your Name">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#ffffff">
     <title>{% block title %}Book Shop{% endblock %}</title>
-    <!-- MAIN CSS -->
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
 
 <body>
-    <!-- 🔝 NAVBAR -->
+    <!-- Navigation bar -->
     <nav>
-    <!-- LEFT SIDE -->
-    <div class="nav-left">
-        <a href="{% url 'home' %}" class="logo">
-        <span class="logo-icon">📚</span>
-        <span class="logo-text">Shelfy</span>
-        </a>
-
-        <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'books:book_list' %}">Search</a>
-        <a href="{% url 'reviews:review_page' %}">Reviews</a>
-    </div>
-
-    
-
-<!-- RIGHT SIDE -->
-<div class="nav-right">
-
-    <!-- CART -->
-    <a href="{% url 'orders:cart' %}" class="cart-link">
-        🛒 Cart
-        {% if cart_count > 0 %}
-            <span class="cart-badge">{{ cart_count }}</span>
-        {% endif %}
-    </a>
-
-    <!-- PROFILE + ROLE LINKS -->
-{% if user.is_authenticated %}
-
-    <a href="{% url 'accounts:profile' %}" class="icon-btn">👤</a>
-
-    {% if is_admin or is_manager %}
-        <a href="{% url 'accounts:dashboard' %}">Dashboard</a>
-    {% endif %}
-
-{% else %}
-    <a href="{% url 'accounts:login' %}" class="icon-btn">👤</a>
-{% endif %}
-
-    <!-- DARK MODE -->
-    <button id="darkModeToggle" class="icon-btn">
-        🌙
-    </button>
-
-</div>
-
+        <div class="nav-left">
+            <!-- Logo -->
+            <a href="{% url 'home' %}" class="logo">
+                <span class="logo-icon">📚</span>
+                <span class="logo-text">Shelfy</span>
+            </a>
+            <!-- Navigation links -->
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'books:book_list' %}">Search</a>
+            <a href="{% url 'reviews:review_page' %}">Reviews</a>
+        </div>
+        <div class="nav-right">
+            <!-- Cart -->
+            <a href="{% url 'orders:cart' %}" class="cart-link">
+                🛒 Cart
+                {% if cart_count > 0 %}
+                    <span class="cart-badge">{{ cart_count }}</span>
+                {% endif %}
+            </a>
+            <!-- Auth section -->
+            {% if user.is_authenticated %}
+                <!-- Profile -->
+                <a href="{% url 'accounts:profile' %}" class="icon-btn">Profile</a>
+                <!-- Dashboard (admin/manager only) -->
+                {% if is_admin or is_manager %}
+                    <a href="{% url 'accounts:dashboard' %}">Dashboard</a>
+                {% endif %}
+                <!-- Logout -->
+                <a href="{% url 'accounts:logout' %}" class="icon-btn">Logout</a>
+            {% else %}
+                <!-- Login -->
+                <a href="{% url 'accounts:login' %}" class="icon-btn">Login</a>
+            {% endif %}
+            <!-- Dark mode toggle -->
+            <button id="darkModeToggle" class="icon-btn" aria-label="Toggle Dark Mode">
+                🌙
+            </button>
+        </div>
     </nav>
-
     <hr>
-    <!-- 📄 PAGE CONTENT -->
+    <!-- Main content -->
     <main>
         {% block content %}
         {% endblock %}
     </main>
-
-    <!-- 🔻 FOOTER -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
             <p>© 2026 BookEShop. All rights reserved.</p>
         </div>
     </footer>
-
-    <!-- JS -->
-    <script src="{% static 'js/main.js' %}" defer></script>
-
+  <script src="{% static 'js/main.js' %}" defer></script>
 </body>
+
 </html>

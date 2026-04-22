@@ -1,5 +1,4 @@
-/* ================= PROFILE PAGE ================= */
-
+/* PROFILE PAGE */
 .auth-wrapper {
     display: flex;
     justify-content: center;
@@ -24,7 +23,7 @@
     color: #2f5d3f;
 }
 
-/* INFO BOX */
+/* PROFILE INFO */
 .profile-info {
     background: #f7f6f2;
     padding: 15px;
@@ -32,6 +31,7 @@
     margin-bottom: 20px;
 }
 
+/* profile text */
 .profile-info p {
     margin: 8px 0;
     font-size: 14px;
@@ -47,11 +47,13 @@
     padding: 8px 10px;
 }
 
+/* input icon */
 .input-group-text {
     margin-right: 8px;
     font-size: 16px;
 }
 
+/* input field */
 .input-group input {
     border: none;
     outline: none;
@@ -60,7 +62,7 @@
     font-size: 14px;
 }
 
-/* BUTTONS */
+/* BUTTON BASE */
 .btn {
     width: 100%;
     padding: 10px;
@@ -77,6 +79,7 @@
     color: white;
 }
 
+/* update hover */
 .update-btn:hover {
     background: #3c7a52;
 }
@@ -94,11 +97,12 @@
     font-weight: 600;
 }
 
+/* logout hover */
 .logout-btn:hover {
     background: #d14c4c;
 }
 
-/* WISHLIST SECTION */
+/* WISHLIST */
 .wishlist-box {
     margin-top: 25px;
     padding: 15px;
@@ -106,11 +110,13 @@
     background: #f0efe9;
 }
 
+/* wishlist title */
 .wishlist-box h4 {
     margin-bottom: 10px;
     color: #2f5d3f;
 }
 
+/* wishlist item */
 .wishlist-item {
     background: white;
     padding: 10px;
@@ -125,9 +131,4 @@
     color: #777;
     font-size: 14px;
     text-align: center;
-}
-
-.wishlist-item::before {
-    content: "❤️";
-    margin-right: 8px;
 }

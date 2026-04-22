@@ -1,7 +1,9 @@
+/*TOP BAR*/
 .top-bar {
     margin-bottom: 15px;
 }
 
+/*ADD BUTTON*/
 .btn-add {
     padding: 8px 12px;
     background-color: #28a745;
@@ -10,22 +12,7 @@
     border-radius: 5px;
 }
 
-.book-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.book-table th,
-.book-table td {
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: left;
-}
-
-.book-table th {
-    background-color: #f4f4f4;
-}
-
+/*SEARCH BAR*/
 .search-bar {
     margin: 15px 0;
     display: flex;
@@ -48,6 +35,7 @@
     cursor: pointer;
 }
 
+/*CLEAR LINK*/
 .search-bar a {
     padding: 8px 10px;
     text-decoration: none;
@@ -60,6 +48,24 @@
     color: red;
 }
 
+/*BOOK TABLE*/
+.book-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.book-table th,
+.book-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+.book-table th {
+    background-color: #f4f4f4;
+}
+
+/*OUT OF STOCK SECTION*/
 .out-of-stock-title {
     margin-top: 30px;
     color: #c62828;

@@ -8,47 +8,33 @@
 {% block content %}
 
 <div class="container">
-
     <h1 class="page-title">Leave a Review</h1>
-
-    <!-- FORM -->
+    <!-- Review form -->
     <div class="review-form-box">
-        <form method="POST" id="reviewForm">
+        <form method="POST">
             {% csrf_token %}
-
             <label>Book:</label>
             {{ form.book }}
-
             <label>First Name:</label>
             {{ form.first_name }}
-
             <label>Last Name:</label>
             {{ form.last_name }}
-
             <label>Rating:</label>
             {{ form.rating }}
-
             <label>Review:</label>
             {{ form.comment }}
-
             <small id="charCount">0 / 300</small>
-
             <button type="submit">Submit Review</button>
         </form>
     </div>
-
-    <!-- REVIEWS -->
+    <!-- Reviews list -->
     <div class="review-section">
-
         <h2 class="page-title">What Readers Are Saying</h2>
-
         <div class="review-grid">
             {% for review in reviews %}
                 <div class="review-card">
                     <h3>{{ review.book.title }}</h3>
-
                     <p><strong>{{ review.first_name }} {{ review.last_name }}</strong></p>
-
                     <p class="stars">
                         {% for i in "12345" %}
                             {% if forloop.counter <= review.rating %}
@@ -58,40 +44,29 @@
                             {% endif %}
                         {% endfor %}
                     </p>
-
                     <p>{{ review.comment }}</p>
                 </div>
             {% empty %}
                 <p>No reviews yet.</p>
             {% endfor %}
         </div>
-
     </div>
-<!-- ================= PAGINATION ================= -->
-<div class="pagination">
-
-    {% if reviews.has_previous %}
-        <a href="?page={{ reviews.previous_page_number }}">← Prev</a>
-    {% endif %}
-
-    {% for num in reviews.paginator.page_range %}
-        {% if reviews.number == num %}
-            <strong>{{ num }}</strong>
-        {% else %}
-            <a href="?page={{ num }}">{{ num }}</a>
+    <!-- Pagination -->
+    <div class="pagination">
+        {% if reviews.has_previous %}
+            <a href="?page={{ reviews.previous_page_number }}">← Prev</a>
         {% endif %}
-    {% endfor %}
-
-    {% if reviews.has_next %}
-        <a href="?page={{ reviews.next_page_number }}">Next →</a>
-    {% endif %}
-
+        {% for num in reviews.paginator.page_range %}
+            {% if reviews.number == num %}
+                <strong>{{ num }}</strong>
+            {% else %}
+                <a href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+        {% if reviews.has_next %}
+            <a href="?page={{ reviews.next_page_number }}">Next →</a>
+        {% endif %}
+    </div>
 </div>
-
-
-
-</div>
-
-<script src="{% static 'js/review_page.js' %}" defer></script>
 
 {% endblock %}

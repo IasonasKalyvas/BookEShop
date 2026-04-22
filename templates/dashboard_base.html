@@ -1,28 +1,42 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 
-<div style="display:flex; gap:20px;">
-
-    <!-- SIDEBAR -->
-    <aside style="width:200px; border-right:1px solid #ccc;">
+<!-- Dashboard layout -->
+<div class="dashboard-container">
+    <aside class="dashboard-sidebar">
         <h3>Dashboard</h3>
-
         <ul>
-            <li><a href="{% url 'accounts:manage_categories' %}">Categories</a></li>
+            <li>
+                <a href="{% url 'accounts:manage_categories' %}">
+                    Manage Categories
+                </a>
+            </li>
             {% if is_manager %}
-                <li><a href="{% url 'accounts:manage_books' %}">Manage Books</a></li>
-                <li><a href="{% url 'accounts:manage_users' %}">Manage Users</a></li>
+                <li>
+                    <a href="{% url 'accounts:manage_books' %}">
+                        Manage Books
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'accounts:manage_users' %}">
+                        Manage Users
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'reviews:manage_reviews' %}">
+                        Manage Reviews
+                    </a>
+                </li>
             {% endif %}
         </ul>
     </aside>
-
-    <!-- MAIN CONTENT -->
-    <main style="flex:1;">
+    <!-- Dashboard content -->
+    <section class="dashboard-content">
         {% block dashboard_content %}
         {% endblock %}
-    </main>
-
+    </section>
 </div>
 
 {% endblock %}

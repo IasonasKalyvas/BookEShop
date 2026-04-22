@@ -1,8 +1,9 @@
-html, body {
+html,
+body {
     height: 100%;
 }
 
-/* ================= CENTER WRAPPER ================= */
+/* CENTER WRAPPER */
 .auth-wrapper {
     height: 100vh;
     display: flex;
@@ -10,7 +11,7 @@ html, body {
     align-items: center;
 }
 
-/* ================= BIGGER CARD ================= */
+/* AUTH CARD */
 .user_card {
     width: 450px;
     min-height: 480px;
@@ -21,7 +22,6 @@ html, body {
     border-radius: 18px;
 
     padding: 40px;
-
     box-shadow: 0 12px 35px rgba(0,0,0,0.18);
 
     display: flex;
@@ -30,19 +30,20 @@ html, body {
     gap: 18px;
 }
 
-/* ================= TITLE ================= */
+/* TITLE */
 #form-title {
     color: #2f5d3f;
     font-size: 2rem;
     text-align: center;
 }
 
-/* ================= INPUT GROUP ================= */
+/* INPUT GROUP */
 .input-group {
     display: flex;
     width: 100%;
 }
 
+/* input icon box */
 .input-group-text {
     background: #2f5d3f;
     color: white;
@@ -51,6 +52,7 @@ html, body {
     border-radius: 10px 0 0 10px;
 }
 
+/* input field */
 .form-control {
     flex: 1;
     padding: 12px;
@@ -59,12 +61,13 @@ html, body {
     font-size: 14px;
 }
 
+/* focus state */
 .form-control:focus {
     outline: none;
     border-color: #3c7a52;
 }
 
-/* ================= BUTTON ================= */
+/* BUTTON */
 .login_btn {
     width: 100%;
     padding: 14px;
@@ -77,27 +80,31 @@ html, body {
     transition: 0.2s;
 }
 
+/* button hover */
 .login_btn:hover {
     background: #3c7a52;
     transform: translateY(-2px);
 }
 
-/* ================= LINKS ================= */
+/* LINKS */
 .links {
     text-align: center;
     font-size: 14px;
 }
 
+/* link style */
 .links a {
     color: #2f5d3f;
     font-weight: bold;
     text-decoration: none;
 }
 
+/* link hover */
 .links a:hover {
     text-decoration: underline;
 }
 
+/* ERROR MESSAGE */
 .form-error {
     background: rgba(255, 0, 0, 0.08);
     color: #b30000;

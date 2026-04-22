@@ -1,3 +1,5 @@
+/*PAGE LAYOUT*/
+
 .book-detail-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -11,7 +13,20 @@
     margin-bottom: 40px;
 }
 
-/* ================= IMAGE CAROUSEL ================= */
+/*BACK BUTTON*/
+
+.back-btn {
+    display: inline-block;
+    padding: 10px 18px;
+    background: linear-gradient(135deg, #2f5d3f, #3c7a52);
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+/*IMAGE GALLERY*/
+
 .main-image-container {
     position: relative;
     background: white;
@@ -28,7 +43,7 @@
     display: block;
 }
 
-/* ================= IMAGE CAROUSEL NAV FIX ================= */
+/* Navigation arrows */
 .carousel-nav {
     position: absolute;
     top: 50%;
@@ -47,16 +62,10 @@
     border: none;
 }
 
-/* LEFT arrow */
-#carouselPrev {
-    left: 12px;
-}
+#carouselPrev { left: 12px; }
+#carouselNext { right: 12px; }
 
-/* RIGHT arrow */
-#carouselNext {
-    right: 12px;
-}
-
+/* Thumbnails */
 .thumbnail-strip {
     display: flex;
     gap: 10px;
@@ -81,7 +90,8 @@
     border-color: #2f5d3f;
 }
 
-/* ================= INFO ================= */
+/*BOOK INFORMATION SECTION*/
+
 .book-detail-info {
     display: flex;
     flex-direction: column;
@@ -115,6 +125,8 @@
 .stock-status.in-stock { background: #e8f5e9; color: #2e7d32; }
 .stock-status.out-of-stock { background: #ffebee; color: #c62828; }
 
+/*CART + QUANTITY CONTROLS*/
+
 .add-to-cart-btn {
     width: 100%;
     padding: 16px;
@@ -125,7 +137,6 @@
     border-radius: 12px;
 }
 
-/* ================= QUANTITY ================= */
 .quantity-selector {
     display: flex;
     align-items: center;
@@ -150,7 +161,32 @@
     cursor: pointer;
 }
 
-/* ================= TABLE ================= */
+/*CATEGORIES + DESCRIPTION*/
+
+.detail-categories {
+    margin-top: 10px;
+}
+
+.category-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.category-tag {
+    background: #f2f2f2;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.description-box summary {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/*BOOK DETAILS TABLE*/
+
 .book-details-table {
     background: white;
     border-radius: 16px;
@@ -169,7 +205,73 @@
     border-bottom: 1px solid #f5f5f5;
 }
 
-/* ================= SIMILAR ================= */
+/*REVIEWS SECTION*/
+
+.reviews-section {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: relative;
+}
+
+.review-carousel {
+    position: relative;
+    overflow: hidden;
+    padding: 0 30px;
+}
+
+.reviews-wrapper {
+    display: flex;
+    transition: transform 0.4s ease;
+    will-change: transform;
+}
+
+.review-slide {
+    min-width: 100%;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.review-card {
+    width: 80%;
+    background: #fafafa;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #e0ddd7;
+}
+
+/* empty state */
+.reviews-wrapper p {
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+/* review navigation arrows */
+.review-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #2f5d3f;
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0.95;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.review-prev { left: 10px; }
+.review-next { right: 10px; }
+
+/*SIMILAR BOOKS SECTION*/
+
 .similar-books-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -203,98 +305,7 @@
     border-top: 5px solid #2f5d3f;
 }
 
-/* ================= REVIEW SECTION (FIXED) ================= */
-.reviews-section {
-    background: white;
-    padding: 25px;
-    border-radius: 16px;
-    margin-bottom: 40px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-
-    /* ADDED FIX */
-    position: relative;
-}
-
-.review-carousel {
-    position: relative;
-    overflow: hidden;
-
-    /* ADDED FIX */
-    padding: 0 30px;
-}
-
-.reviews-wrapper {
-    display: flex;
-    transition: transform 0.4s ease;
-    will-change: transform;
-}
-
-.review-slide {
-    min-width: 100%;
-    flex-shrink: 0;
-    display: flex;
-    justify-content: center;
-}
-
-/* EMPTY STATE FIX */
-.reviews-wrapper p {
-    padding: 20px;
-    text-align: center;
-    width: 100%;
-}
-
-.review-card {
-    width: 80%;
-    background: #fafafa;
-    padding: 20px;
-    border-radius: 12px;
-    border: 1px solid #e0ddd7;
-}
-
-/* ================= REVIEW ARROWS FIX ================= */
-.review-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: #2f5d3f;
-    color: white;
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 10;
-
-    /* NICE TOUCH */
-    opacity: 0.95;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-
-/* PUSH OUTSIDE TEXT AREA */
-.review-prev {
-    left: 10px;
-}
-
-.review-next {
-    right: 10px;
-}
-
-/* ================= BACK BUTTON ================= */
-.back-btn {
-    display: inline-block;
-    padding: 10px 18px;
-    background: linear-gradient(135deg, #2f5d3f, #3c7a52);
-    color: white;
-    text-decoration: none;
-    border-radius: 10px;
-    font-weight: bold;
-}
-
-/* ================= RESPONSIVE ================= */
-@media (max-width: 992px) {
-    .book-detail-main { grid-template-columns: 1fr; }
-    .similar-books-grid { grid-template-columns: repeat(3, 1fr); }
-}
+/*WISHLIST*/
 
 .wishlist-btn {
     font-size: 28px;
@@ -304,18 +315,6 @@
     margin-top: 10px;
 }
 
-.quantity-selector input[type="number"]::-webkit-outer-spin-button,
-.quantity-selector input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-.quantity-selector input[type="number"] {
-    -moz-appearance: textfield; /* Firefox */
-    appearance: textfield;
-}
-
-/* ================= WISHLIST POPUP ================= */
 .wishlist-popup {
     position: fixed;
     bottom: 20px;
@@ -334,4 +333,29 @@
 .wishlist-popup.show {
     opacity: 1;
     transform: translateY(0);
+}
+
+/*BROWSER FIXES*/
+
+.quantity-selector input[type="number"]::-webkit-outer-spin-button,
+.quantity-selector input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.quantity-selector input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+/*RESPONSIVE DESIGN*/
+
+@media (max-width: 992px) {
+    .book-detail-main {
+        grid-template-columns: 1fr;
+    }
+
+    .similar-books-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }

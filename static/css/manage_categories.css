@@ -1,7 +1,4 @@
-.page-title {
-    margin-bottom: 15px;
-}
-
+/*ADD CATEGORY FORM*/
 .category-form {
     display: flex;
     gap: 10px;
@@ -24,6 +21,7 @@
     cursor: pointer;
 }
 
+/*CATEGORY TABLE*/
 .category-table {
     width: 100%;
     border-collapse: collapse;
@@ -39,6 +37,7 @@
     background-color: #f4f4f4;
 }
 
+/*INLINE EDIT FORM*/
 .inline-form {
     display: inline-flex;
     gap: 5px;

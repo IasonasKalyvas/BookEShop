@@ -1,22 +1,22 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/book_list.css' %}">
+<link rel="stylesheet" href="{% static 'css/book_list.css' %}">
 {% endblock %}
-{% block title %}All Books{% endblock %}
+
 {% block content %}
-<!-- ========================= PAGE WRAPPER (CENTERS CONTENT) ========================= -->
+
 <div class="container">
+    <!-- Page title -->
     <h1 class="page-title">All Books</h1>
-    <!-- ========================= FILTER FORM (METABOOK STYLE) ========================== -->
-    <form method="GET" action="{% url 'books:book_filter' %}" class="filter-bar">
-        <!-- SEARCH -->
+    <!-- Filter form -->
+    <form method="GET" action="{% url 'books:book_list' %}" class="book-filter-form">
         <input type="text" name="search" placeholder="Search books...">
         <input type="text" name="author" placeholder="Author">
         <input type="number" name="id" placeholder="Book ID">
         <input type="number" name="min_price" placeholder="Min Price">
         <input type="number" name="max_price" placeholder="Max Price">
-        <!-- ========================= CATEGORY DROPDOWN ========================== -->
         <details class="dropdown">
             <summary>Categories</summary>
             <div class="dropdown-content">
@@ -29,7 +29,7 @@
                 {% endfor %}
             </div>
         </details>
-        <!-- ========================= DATE FILTER GROUPED ========================== -->
+        <!-- Date filter -->
         <details class="dropdown">
             <summary>Publication Date</summary>
             <div class="dropdown-content">
@@ -49,27 +49,24 @@
                     Last 6 Months
                 </label>
                 <label>
-                     <input type="radio" name="date_filter" value=""
-                        {% if not selected_date or selected_date == "" %}checked{% endif %}>
+                    <input type="radio" name="date_filter" value=""
+                           {% if not selected_date or selected_date == "" %}checked{% endif %}>
                     All Time
                 </label>
             </div>
         </details>
-        <!-- APPLY BUTTON -->
+        <!-- Submit filters -->
         <button type="submit">Apply Filters</button>
     </form>
-    <!-- CLEAR FILTERS -->
+    <!-- Clear filters -->
     <a href="{% url 'books:book_list' %}">
         <button type="button">Clear</button>
     </a>
     <hr>
-    <!-- ========================= BOOK GRID ========================== -->
     <div class="book-container">
         {% for book in books %}
         <div class="book-card">
-            <!-- ========================= MODIFIED IMAGE DISPLAY ========================= -->
-            <!-- Uses the new get_primary_image method to display the cover image -->
-            <!-- This ensures the primary image (or first image as fallback) is shown -->
+            <!-- Book image -->
             {% with primary_image=book.get_primary_image %}
                 {% if primary_image %}
                     <img src="{{ primary_image.image.url }}" alt="{{ book.title }}">
@@ -77,21 +74,16 @@
                     <div class="no-image">No Image</div>
                 {% endif %}
             {% endwith %}
-            
             <div class="book-info">
-                <!-- TITLE -->
+                <!-- Book title -->
                 <h3 class="book-title">
                     <a href="{% url 'books:book_detail' book.slug %}">
                         {{ book.title }}
                     </a>
                 </h3>
-
-                <!-- AUTHOR -->
                 <p class="book-author">
                     {{ book.author }}
                 </p>
-
-                <!-- PRICE -->
                 <p class="book-price">
                     €{{ book.price }}
                 </p>
@@ -102,16 +94,12 @@
         {% endfor %}
     </div>
 </div>
-
-<!-- ========================= PAGINATION ========================= -->
+<!-- Pagination -->
 <div class="pagination">
-
     {% if page_obj.has_previous %}
         <a href="?page=1">&laquo; First</a>
         <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
     {% endif %}
-
-    <!-- Page Numbers -->
     {% for num in page_obj.paginator.page_range %}
         {% if page_obj.number == num %}
             <strong>{{ num }}</strong>
@@ -119,11 +107,10 @@
             <a href="?page={{ num }}">{{ num }}</a>
         {% endif %}
     {% endfor %}
-
     {% if page_obj.has_next %}
         <a href="?page={{ page_obj.next_page_number }}">Next</a>
         <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
     {% endif %}
-
 </div>
+
 {% endblock %}

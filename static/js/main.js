@@ -1,34 +1,28 @@
-console.log("Website loaded successfully");
-
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("DOM is ready");
-
-    // ================= ADD TO CART BUTTONS =================
     const buttons = document.getElementsByClassName("add-to-cart");
 
+    // Attach click event to all add-to-cart buttons
     for (let i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener("click", function () {
             alert("Book added to cart!");
         });
     }
 
-    // ================= DARK MODE TOGGLE =================
+    // Dark mode toggle button
     const darkModeToggle = document.getElementById("darkModeToggle");
 
-    console.log("Dark mode button:", darkModeToggle);
-
-    // ✅ Apply saved dark mode on page load
+    // Load saved dark mode preference from localStorage
     if (localStorage.getItem("darkMode") === "enabled") {
         document.body.classList.add("dark-mode");
-        if (darkModeToggle) darkModeToggle.textContent = "☀️";
+        if (darkModeToggle) {
+            darkModeToggle.textContent = "☀️";
+        }
     }
-
+    // Toggle dark mode on click
     if (darkModeToggle) {
         darkModeToggle.addEventListener("click", function () {
-            console.log("🔥 DARK MODE CLICKED");
-
             document.body.classList.toggle("dark-mode");
-
+            // Save preference and update icon
             if (document.body.classList.contains("dark-mode")) {
                 darkModeToggle.textContent = "☀️";
                 localStorage.setItem("darkMode", "enabled");

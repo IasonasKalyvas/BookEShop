@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 from django.dispatch import receiver
 from .models import Profile
 
-
+# User profile creation signal: Automatically creates a Profile when a new User is created
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
     if created:
-        Profile.objects.create(user=instance)
+        Profile.objects.get_or_create(user=instance)

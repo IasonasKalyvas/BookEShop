@@ -8,21 +8,15 @@
 {% block content %}
 
 <div class="book-detail-container">
-
-    <!-- 🔙 BACK BUTTON (TOP LEFT NOW) -->
     <div class="back-top">
         <a href="{% url 'books:book_list' %}" class="back-btn">← Back</a>
     </div>
-
     <div class="book-detail-main">
-
-        <!-- ================= IMAGE CAROUSEL ================= -->
+        <!-- Book image gallery -->
         <div class="book-gallery"
              id="book-gallery"
              data-images="{% for img in book.get_ordered_images %}{{ img.image.url }}{% if not forloop.last %},{% endif %}{% endfor %}">
-
             <div class="main-image-container">
-
                 {% for img in book.get_ordered_images %}
                     {% if forloop.first %}
                         <img id="mainImage"
@@ -31,14 +25,12 @@
                              class="main-image">
                     {% endif %}
                 {% endfor %}
-
                 {% if book.images.count > 1 %}
                     <button id="carouselPrev" class="carousel-nav">&#10094;</button>
                     <button id="carouselNext" class="carousel-nav">&#10095;</button>
                 {% endif %}
-
             </div>
-
+            <!-- Thumbnails -->
             {% if book.images.count > 1 %}
             <div class="thumbnail-strip">
                 {% for img in book.get_ordered_images %}
@@ -48,74 +40,54 @@
                 {% endfor %}
             </div>
             {% endif %}
-
         </div>
-
-
-        
-
-        <!-- ================= BOOK INFO ================= -->
+        <!-- Book information -->
         <div class="book-detail-info">
-
             <h1 class="detail-title">{{ book.title }}</h1>
             <p class="detail-author">by {{ book.author }}</p>
-
             <div class="price-section">
                 <span class="detail-price">€{{ book.price }}</span>
-                 <div class="wishlist-action">
-            {% if user.is_authenticated %}
-            <button id="wishlistBtn"
-                data-book-id="{{ book.id }}"
-                class="wishlist-btn">
-                ❤️
-                </button>
-            {% endif %}
-        </div>
-            
-
+                <div class="wishlist-action">
+                    {% if user.is_authenticated %}
+                    <button id="wishlistBtn"
+                        data-book-id="{{ book.id }}"
+                        class="wishlist-btn">
+                        {% if is_wishlisted %}💖{% else %}🤍{% endif %}
+                    </button>
+                    {% endif %}
+                </div>
+                <!-- Stock status -->
                 {% if book.stock > 0 %}
                     <span class="stock-status in-stock">In Stock ({{ book.stock }})</span>
                 {% else %}
                     <span class="stock-status out-of-stock">Out of Stock</span>
                 {% endif %}
             </div>
-
-            <!-- ADD TO CART -->
+            <!-- Add to cart -->
             <div class="cart-section">
-
                 {% if book.stock > 0 %}
-
                 <form action="{% url 'orders:add_to_cart' book.id %}" method="GET">
-
+                    <!-- Quantity selector -->
                     <div class="quantity-selector">
-
                         <button type="button" id="qtyMinus" class="qty-btn">−</button>
-
                         <input type="number"
                                id="qty"
                                name="qty"
                                value="1"
                                min="1"
                                max="{{ book.stock }}">
-
                         <button type="button" id="qtyPlus" class="qty-btn">+</button>
-
                     </div>
-
                     <button type="submit" class="add-to-cart-btn">
                         🛒 Add to Cart
                     </button>
-
                 </form>
-
                 {% else %}
                     <button class="add-to-cart-btn disabled" disabled>
                         Out of Stock
                     </button>
                 {% endif %}
-
             </div>
-
             <!-- Categories -->
             <div class="detail-categories">
                 <strong>Categories:</strong>
@@ -125,96 +97,74 @@
                     {% endfor %}
                 </div>
             </div>
-
+            <!-- Description -->
             <details class="description-box">
                 <summary>Read more</summary>
                 <p>{{ book.description }}</p>
             </details>
-
         </div>
     </div>
-
+    <!-- Reviews -->
     <div class="reviews-section">
-
-    <h3 class="page-title">What Readers Are Saying</h3>
-
-    <div class="review-carousel">
-
-        <button class="review-nav review-prev">&#10094;</button>
-
-        <div class="reviews-wrapper">
-            {% for review in book.reviews.all %}
-                <div class="review-slide">
-                    <div class="review-card">
-
-                        <h4>{{ review.book.title }}</h4>
-
-                        <p><strong>{{ review.first_name }} {{ review.last_name }}</strong></p>
-
-                        <p class="stars">
-                            {% for i in "12345" %}
-                                {% if forloop.counter <= review.rating %}
-                                    ⭐
-                                {% else %}
-                                    ☆
-                                {% endif %}
-                            {% endfor %}
-                        </p>
-
-                        <p>{{ review.comment }}</p>
-
+        <h3 class="page-title">What Readers Are Saying</h3>
+        <div class="review-carousel">
+            <button class="review-nav review-prev">&#10094;</button>
+            <div class="reviews-wrapper">
+                {% for review in book.reviews.all %}
+                    <div class="review-slide">
+                        <div class="review-card">
+                            <h4>{{ review.book.title }}</h4>
+                            <p><strong>{{ review.first_name }} {{ review.last_name }}</strong></p>
+                            <p class="stars">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= review.rating %}
+                                        ⭐
+                                    {% else %}
+                                        ☆
+                                    {% endif %}
+                                {% endfor %}
+                            </p>
+                            <p>{{ review.comment }}</p>
+                        </div>
                     </div>
-                </div>
-            {% empty %}
-                <p>No reviews for this book yet.</p>
-            {% endfor %}
+                {% empty %}
+                    <p>No reviews for this book yet.</p>
+                {% endfor %}
+            </div>
+            <button class="review-nav review-next">&#10095;</button>
         </div>
-
-        <button class="review-nav review-next">&#10095;</button>
-
     </div>
-</div>
-
-    <!-- TABLE -->
+    <!-- Book details table -->
     <div class="book-details-table">
         <h3>Book Details</h3>
         <table>
-
             {% if book.publisher %}
             <tr><td><strong>Publisher</strong></td><td>{{ book.publisher }}</td></tr>
             {% endif %}
-
             {% if book.page_count %}
             <tr><td><strong>Pages</strong></td><td>{{ book.page_count }}</td></tr>
             {% endif %}
-
             {% if book.cover_type %}
             <tr><td><strong>Cover</strong></td><td>{{ book.get_cover_type_display }}</td></tr>
             {% endif %}
-
             {% if book.isbn_10 %}
             <tr><td><strong>ISBN-10</strong></td><td>{{ book.isbn_10 }}</td></tr>
             {% endif %}
-
             {% if book.isbn_13 %}
             <tr><td><strong>ISBN-13</strong></td><td>{{ book.isbn_13 }}</td></tr>
             {% endif %}
-
             {% if book.published_date %}
             <tr><td><strong>Published</strong></td><td>{{ book.published_date }}</td></tr>
             {% endif %}
-
         </table>
     </div>
-
-    <!-- SIMILAR -->
+    <!-- Similar books -->
     <div class="similar-books-section">
         <h3>Similar Books</h3>
-
         <div class="similar-books-grid">
             {% for similar in similar_books %}
                 <div class="similar-book-card">
-
+                    <!-- Book image -->
                     {% with img=similar.get_primary_image %}
                         {% if img %}
                             <img src="{{ img.image.url }}">
@@ -222,7 +172,7 @@
                             <div class="no-image-small">No Image</div>
                         {% endif %}
                     {% endwith %}
-
+                    <!-- Book info -->
                     <div class="similar-book-info">
                         <a href="{% url 'books:book_detail' similar.slug %}">
                             {{ similar.title }}
@@ -231,18 +181,13 @@
                             €{{ similar.price }}
                         </div>
                     </div>
-
-                </div>    
-
+                </div>
             {% empty %}
                 <p>No recommendations</p>
             {% endfor %}
         </div>
-
     </div>
-
 </div>
-
 
 <div id="wishlistPopup" class="wishlist-popup"></div>
 <script src="{% static 'js/book_detail.js' %}" defer></script>

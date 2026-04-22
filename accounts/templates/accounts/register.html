@@ -8,50 +8,55 @@
 {% block content %}
 
 <div class="auth-wrapper">
-
     <div class="user_card">
-
+        <!-- Page title -->
         <h3 id="form-title">REGISTER ACCOUNT</h3>
-
+        <!-- Displays server-side validation errors -->
         {% if error_message %}
-            <div class="form-error">
-                {{ error_message }}
-            </div>
+        <div class="form-error">
+            {{ error_message }}
+        </div>
         {% endif %}
-
+        <!-- Registration form -->
         <form method="POST">
             {% csrf_token %}
-
+            <!-- Username input field -->
             <div class="input-group">
-                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                <input type="text" name="username" maxlength="50" class="form-control" placeholder="Username..">
+                <span class="input-group-text">
+                    <i class="fas fa-user"></i>
+                </span>
+                <input type="text" name="username" maxlength="50" class="form-control" placeholder="Username.." required>
             </div>
-
+            <!-- Email input field -->
             <div class="input-group">
-                <span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
-                <input type="email" name="email" maxlength="50" class="form-control" placeholder="Email..">
+                <span class="input-group-text">
+                    <i class="fas fa-envelope-square"></i>
+                </span>
+                <input type="email" name="email" maxlength="50" class="form-control" placeholder="Email.." required>
             </div>
-
+            <!-- Password input field -->
             <div class="input-group">
-                <span class="input-group-text"><i class="fas fa-key"></i></span>
-                <input type="password" name="password1" maxlength="50" class="form-control" placeholder="Enter password...">
+                <span class="input-group-text">
+                    <i class="fas fa-key"></i>
+                </span>
+                <input type="password" name="password1" class="form-control" placeholder="Enter password..." required>
             </div>
-
+            <!-- Confirm password input field -->
             <div class="input-group">
-                <span class="input-group-text"><i class="fas fa-key"></i></span>
-                <input type="password" name="password2" maxlength="50" class="form-control" placeholder="Re-enter password...">
+                <span class="input-group-text">
+                    <i class="fas fa-key"></i>
+                </span>
+                <input type="password" name="password2" class="form-control" placeholder="Re-enter password..." required>
             </div>
-
+            <!-- Submit button -->
             <input class="btn login_btn" type="submit" value="Register Account">
         </form>
-
+        <!-- Redirect to login page -->
         <div class="links">
             Already have an account?
             <a href="{% url 'accounts:login' %}">Login</a>
         </div>
-
     </div>
-
 </div>
 
 {% endblock %}

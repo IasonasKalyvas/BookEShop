@@ -1,4 +1,4 @@
-/* ================= FORM ================= */
+/* FORM */
 .review-form-box {
     background: white;
     padding: 25px;
@@ -7,12 +7,14 @@
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
+/* form layout */
 .review-form-box form {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
+/* form inputs */
 .review-form-box input,
 .review-form-box select,
 .review-form-box textarea {
@@ -21,7 +23,7 @@
     border: 1px solid #ccc;
 }
 
-/* ================= REVIEW SECTION ================= */
+/* REVIEW SECTION */
 .review-section {
     background: white;
     padding: 30px;
@@ -30,14 +32,14 @@
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
-/* ================= GRID ================= */
+/* GRID */
 .review-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
 }
 
-/* ================= CARD ================= */
+/* CARD */
 .review-card {
     background: #fafafa;
     padding: 15px;
@@ -45,18 +47,12 @@
     border: 1px solid #e0ddd7;
 }
 
-/* ================= STARS ================= */
+/* STARS */
 .stars {
     color: gold;
 }
 
-/* ================= RESPONSIVE ================= */
-@media (max-width: 768px) {
-    .review-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
+/* PAGINATION */
 .pagination {
     display: flex;
     justify-content: center;
@@ -64,6 +60,7 @@
     margin-top: 25px;
 }
 
+/* pagination links */
 .pagination a {
     padding: 6px 10px;
     border-radius: 6px;
@@ -72,9 +69,17 @@
     text-decoration: none;
 }
 
+/* active page */
 .pagination strong {
     padding: 6px 10px;
     border-radius: 6px;
     background: #3c7a52;
     color: white;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .review-grid {
+        grid-template-columns: 1fr;
+    }
 }

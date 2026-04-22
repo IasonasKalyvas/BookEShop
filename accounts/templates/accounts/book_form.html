@@ -1,15 +1,71 @@
-{% extends "dashboard_base.html" %}
+{% extends "base.html" %}
+{% load static %}
 
-{% block dashboard_content %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/book_form.css' %}">
+{% endblock %}
 
-<h2>{% if form.instance.pk %}Edit Book{% else %}Add Book{% endif %}</h2>
+{% block content %}
 
-<form method="POST">
-    {% csrf_token %}
-    
-    {{ form.as_p }}
-
-    <button type="submit">Save</button>
-</form>
+<div class="book-form-wrapper">
+    <div class="book-form-card">
+        <!-- Dynamic title (Add or Edit) -->
+        <h1 class="form-title">
+            {% if form.instance.pk %}
+                Edit Book
+            {% else %}
+                Add Book
+            {% endif %}
+        </h1>
+        <!-- Book form -->
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!-- Book fields -->
+            <div class="form-section">
+                {{ form.as_p }}
+            </div>
+            <!-- Image upload section -->
+            <div class="form-section">
+                <h3>Images</h3>
+                <!-- Required for Django formsets -->
+                {{ formset.management_form }}
+                <!-- Formset-level errors -->
+                {% if formset.non_form_errors %}
+                    <div class="form-errors">
+                        {{ formset.non_form_errors }}
+                    </div>
+                {% endif %}
+                <!-- Image formset rows -->
+                <div id="formset-container">
+                    {% for form in formset %}
+                        <div class="image-row">
+                            <!-- Hidden ID field -->
+                            {{ form.id }}
+                            <!-- Image upload -->
+                            <div class="image-input">
+                                {{ form.image.label_tag }}
+                                {{ form.image }}
+                            </div>
+                            <!-- Primary image checkbox -->
+                            <div class="primary-input">
+                                {{ form.is_primary }} Primary
+                            </div>
+                            <!-- Delete checkbox (only for existing images) -->
+                            {% if form.instance.pk %}
+                                <div class="delete-input">
+                                    {{ form.DELETE }} Delete
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- Form actions -->
+            <div class="form-actions">
+                <button type="submit" class="btn-save">Save Book</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 {% endblock %}

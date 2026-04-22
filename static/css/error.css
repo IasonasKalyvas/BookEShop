@@ -1,3 +1,4 @@
+/*PAGE LAYOUT*/
 body {
     margin: 0;
     font-family: "Segoe UI", Arial, sans-serif;
@@ -10,10 +11,12 @@ body {
     color: #333;
 }
 
+/*CONTAINER*/
 .container {
     max-width: 500px;
 }
 
+/*HEADINGS*/
 h1 {
     font-size: 80px;
     margin: 0;
@@ -24,10 +27,12 @@ h2 {
     margin-top: 10px;
 }
 
+/*TEXT*/
 p {
     color: #666;
 }
 
+/*LINK BUTTON*/
 a {
     display: inline-block;
     margin-top: 20px;

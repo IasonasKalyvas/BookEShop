@@ -6,15 +6,19 @@
 {% endblock %}
 
 {% block content %}
+
 <div class="cart-container">
   <h2 class="page-title">Your Cart</h2>
   {% if not items %}
+  <!-- Empty cart state -->
   <div class="empty-cart">
     <h3>Your cart is empty 🛒</h3>
     <a href="{% url 'books:book_list' %}" class="btn-primary">Continue Shopping</a>
   </div>
   {% else %}
+  <!-- Cart layout -->
   <div class="cart-layout">
+    <!-- Cart items -->
     <div class="cart-items">
       {% for item in items %}
       <div class="cart-item">
@@ -29,19 +33,23 @@
           <a href="{% url 'orders:add_to_cart' item.book.id %}">+</a>
           {% endif %}
         </div>
-        <div>€{{ item.total_price }}</div>
+        <div>
+          €{{ item.total_price }}
+        </div>
       </div>
       {% endfor %}
     </div>
+    <!-- Cart summary -->
     <div class="cart-summary">
       <h3>Summary</h3>
       <p>Total Items: {{ cart.items.count }}</p>
       <h2>€{{ cart.total_price }}</h2>
-      <a href="{% url 'orders:checkout' %}" class="checkout-btn">Proceed to Checkout</a>
+      <a href="{% url 'orders:checkout' %}" class="checkout-btn">
+        Proceed to Checkout
+      </a>
     </div>
   </div>
   {% endif %}
 </div>
-{% endblock %}
 
-<script src="{% static 'js/cart.js' %}" defer></script>
+{% endblock %}

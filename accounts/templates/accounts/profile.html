@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Profile{% endblock %}
-
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 {% endblock %}
@@ -10,10 +8,8 @@
 {% block content %}
 
 <div class="auth-wrapper">
-
     <div class="user_card">
-
-        <!-- SUCCESS MESSAGE -->
+        <!-- Success messages -->
         {% if messages %}
             {% for message in messages %}
                 <div class="success-message">
@@ -21,46 +17,40 @@
                 </div>
             {% endfor %}
         {% endif %}
-
         <h3 id="form-title">My Profile</h3>
-
-        <!-- USER INFO -->
+        <!-- User information display -->
         <div class="profile-info">
             <p><strong>Username:</strong> {{ request.user.username }}</p>
             <p><strong>Email:</strong> {{ request.user.email }}</p>
         </div>
-
-        <!-- ERROR MESSAGE -->
+        <!-- Form validation errors -->
         {% if form.errors %}
             <div class="error-message">
-                {{ form.errors.as_text|striptags }}
+                {% for field, errors in form.errors.items %}
+                    {{ field }}: {{ errors|join:", " }}<br>
+                {% endfor %}
             </div>
         {% endif %}
-
-        <!-- FORM -->
+        <!-- Profile update form -->
         <form method="POST">
             {% csrf_token %}
-
             <div class="input-group">
                 <span class="input-group-text">📍</span>
                 {{ form.address }}
             </div>
-
             <div class="input-group">
                 <span class="input-group-text">📞</span>
                 {{ form.phone }}
             </div>
-
+            <!-- Submit update -->
             <button type="submit" class="btn update-btn">
                 Update Profile
             </button>
         </form>
-
-        <!-- WISHLIST -->
+        <!-- Wishlist section -->
         <div class="wishlist-box">
-            <h4>❤️  Wishlist</h4>
-
-            {% if profile.favorite_books.all %}
+            <h4>❤️ Wishlist</h4>
+            {% if profile.favorite_books.all|length > 0 %}
                 {% for book in profile.favorite_books.all %}
                     <div class="wishlist-item">
                         {{ book.title }}
@@ -70,16 +60,10 @@
                 <p class="empty-wishlist">No books in wishlist yet.</p>
             {% endif %}
         </div>
-
-        
-
-        <!-- LOGOUT -->
+        <!-- Logout button -->
         <a href="{% url 'accounts:logout' %}" class="logout-btn">
             Logout
         </a>
-
     </div>
-
 </div>
-
 {% endblock %}

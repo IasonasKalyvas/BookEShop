@@ -1,17 +1,19 @@
-/* ========================= GLOBAL THEME ========================= */
+/*GLOBAL THEME*/
 html, body {
     height: 100%;
 }
+
 body {
     margin: 0;
     font-family: "Segoe UI", Arial, sans-serif;
     background: linear-gradient(180deg, #f7f6f2, #ebe6dd);
     color: #2f3b2f;
 
-    /* IMPORTANT: enables sticky footer */
     display: flex;
     flex-direction: column;
 }
+
+/* background pattern overlay */
 body::before {
     content: "";
     position: fixed;
@@ -23,18 +25,54 @@ body::before {
     pointer-events: none;
     z-index: -1;
 }
+
+/* layout root */
 main {
     flex: 1;
 }
-/* ========================= CONTAINER ========================= */
+
+/*LAYOUT*/
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
-/* ========================= NAVBAR ========================= */
 
-/* ========================= LOGO ========================= */
+/*NAVBAR*/
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 25px;
+    background: #2f5d3f;
+    color: white;
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* nav sections */
+.nav-left,
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* links */
+nav a {
+    color: white;
+    margin-right: 15px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/*LOGO*/
 .logo {
     display: flex;
     align-items: center;
@@ -49,59 +87,16 @@ main {
     font-size: 20px;
 }
 
-/* optional: make logo slightly stronger than nav links */
 .logo-text {
     letter-spacing: 0.5px;
 }
 
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 25px;
-    background: #2f5d3f;
-    color: white;
-
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-nav a {
-    color: white;
-    margin-right: 15px;
-    text-decoration: none;
-    font-weight: 500;
-}
-nav a:hover {
-    text-decoration: underline;
-}
-.nav-right {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.icon-btn {
-    background: rgba(255,255,255,0.15);
-    border: none;
-    padding: 6px 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    color: white;
-}
-/* NAV LEFT */
-.nav-left {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-/* CART LINK */
+/*CART*/
 .cart-link {
     position: relative;
     font-weight: 500;
 }
 
-/* CART BADGE */
 .cart-badge {
     background: red;
     color: white;
@@ -111,12 +106,7 @@ nav a:hover {
     margin-left: 5px;
 }
 
-/* ========================= COMMON ELEMENTS ========================= */
-.page-title {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #2f3b2f;
-}
+/*BUTTONS*/
 button {
     background: #2f5d3f;
     color: white;
@@ -127,9 +117,28 @@ button {
     font-size: 14px;
     transition: background 0.2s;
 }
+
 button:hover {
     background: #3c7a52;
 }
+
+/* icon-style buttons */
+.icon-btn {
+    background: rgba(255,255,255,0.15);
+    border: none;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+}
+
+/*COMMON ELEMENTS*/
+.page-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #2f3b2f;
+}
+
 .no-image {
     height: 240px;
     background: linear-gradient(135deg, #e8e4dc, #d5d0c7);
@@ -139,67 +148,76 @@ button:hover {
     color: #888;
     font-size: 14px;
 }
-/* ========================= HERO SECTION ========================= */
+
+/*HERO*/
 .hero {
     text-align: center;
     padding: 80px 20px;
 }
+
 .hero h1 {
     font-size: 2.8rem;
     margin-bottom: 10px;
 }
+
 .hero p {
     color: #666;
     font-size: 16px;
 }
-/* ========================= GENERIC GRID ========================= */
+
+/*GRID*/
 .book-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 15px;
 }
+
+/* responsive grid */
 @media (max-width: 992px) {
     .book-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
 @media (max-width: 576px) {
     .book-grid {
         grid-template-columns: 1fr;
     }
 }
-/* ========================= FOOTER ========================= */
+
+/*FOOTER*/
 .footer {
     background: #2f5d3f;
     color: white;
     padding: 20px 30px;
-
-    /* pushes footer to bottom */
     margin-top: auto;
 }
+
 .footer-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
 }
+
 .footer-links a {
     color: white;
     margin-left: 15px;
     text-decoration: none;
     font-size: 14px;
 }
+
 .footer-links a:hover {
     text-decoration: underline;
 }
 
-/* ========================= DARK MODE ========================= */
+/*DARK MODE*/
 body.dark-mode {
     background: #121417;
     color: #e6e6e6;
 }
 
-/* ========================= NAVBAR ========================= */
+/* navbar */
 body.dark-mode nav {
     background: #1b1f24;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
@@ -213,13 +231,13 @@ body.dark-mode nav a:hover {
     color: #ffffff;
 }
 
-/* ========================= FOOTER ========================= */
+/* footer */
 body.dark-mode .footer {
     background: #1b1f24;
     color: #e6e6e6;
 }
 
-/* ========================= TABLES ========================= */
+/* tables */
 body.dark-mode table {
     background: #1a1d22;
     color: #e6e6e6;
@@ -235,7 +253,7 @@ body.dark-mode td {
     border: 1px solid #2c3440;
 }
 
-/* ========================= LINKS ========================= */
+/* links */
 body.dark-mode a {
     color: #8ab4f8;
 }
@@ -244,7 +262,7 @@ body.dark-mode a:hover {
     color: #ffffff;
 }
 
-/* ========================= BUTTONS ========================= */
+/* buttons */
 body.dark-mode button {
     background: #2c3440;
     color: #ffffff;
@@ -254,14 +272,14 @@ body.dark-mode button:hover {
     background: #3a4654;
 }
 
-/* ========================= CARDS / CONTAINERS ========================= */
+/* cards / containers */
 body.dark-mode .container,
 body.dark-mode .card {
     background: #1a1d22;
     border-radius: 10px;
 }
 
-/* ========================= INPUTS (if you have forms/search) ========================= */
+/* inputs */
 body.dark-mode input,
 body.dark-mode textarea,
 body.dark-mode select {
@@ -269,4 +287,3 @@ body.dark-mode select {
     color: #e6e6e6;
     border: 1px solid #2c3440;
 }
-

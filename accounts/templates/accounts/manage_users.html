@@ -8,46 +8,65 @@
 {% block dashboard_content %}
 
 <h1>Manage Users</h1>
-
 <table class="user-table">
-    <tr>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Role</th>
-        <th>Actions</th>
-    </tr>
-
+    <!-- Table header -->
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    <!-- Loop through all users -->
     {% for u in users %}
     <tr>
+        <!-- User basic info -->
         <td>{{ u.username }}</td>
         <td>{{ u.email }}</td>
-
+        <!-- Role display logic -->
         <td>
             {% if u.is_superuser %}
-                <span class="role-admin">👑 Admin</span>
+                <span class="role-admin">Admin</span>
             {% else %}
                 {{ u.role }}
             {% endif %}
         </td>
-
+        <!-- User management actions -->
         <td class="action-links">
+            <!-- Admin accounts cannot be modified -->
             {% if u.is_superuser %}
                 <span class="locked">Locked</span>
-
+            <!-- Prevent self-modification -->
             {% elif u == request.user %}
                 <span class="self-user">You</span>
-
             {% else %}
-                <a href="{% url 'accounts:promote_user' u.id %}">Promote</a>
-                <a href="{% url 'accounts:demote_user' u.id %}">Demote</a>
-
+                <!-- Role management actions -->
+                {% if u.role == "Manager" %}
+                    <a href="{% url 'accounts:demote_user' u.id %}">
+                        Demote
+                    </a>
+                {% else %}
+                    <a href="{% url 'accounts:promote_user' u.id %}">
+                        Promote
+                    </a>
+                {% endif %}
+                <!-- Delete user (admin only) -->
                 {% if request.user.is_superuser %}
-                    <a href="{% url 'accounts:delete_user' u.id %}">Delete</a>
+                    <a href="{% url 'accounts:delete_user' u.id %}"
+                        class="delete-confirm"
+                        data-message="Are you sure you want to delete this user?">
+                        Delete
+                    </a>
                 {% endif %}
             {% endif %}
         </td>
     </tr>
     {% endfor %}
+    </tbody>
 </table>
+
+<script src="{% static 'js/manage.js' %}" defer></script>
 
 {% endblock %}

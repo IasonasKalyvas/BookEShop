@@ -1,10 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock %}
+
 {% block content %}
+
 <div class="home-wrapper">
+    <!-- Hero section -->
     <section class="home-hero">
         <div class="home-hero-overlay">
             <div class="home-hero-content">
@@ -16,16 +20,18 @@
             </div>
         </div>
     </section>
-
+    <!-- Categories section -->
     <section class="container categories-section">
-    <h2 class="section-title">Browse by Genre</h2>
-    <div class="home-category-grid">
-        {% for cat in categories %}
-            <a class="home-category-btn"
-               href="{% url 'books:book_list' %}?genre={{ cat.name|urlencode }}">
-                {{ cat.name }}
-            </a>
-        {% endfor %}
-    </div>
+        <h2 class="section-title">Browse by Genre</h2>
+        <div class="home-category-grid">
+            {% for cat in categories %}
+                <a class="home-category-btn"
+                   href="{% url 'books:book_list' %}?genre={{ cat.name|urlencode }}">
+                    {{ cat.name }}
+                </a>
+            {% endfor %}
+        </div>
     </section>
+</div>
+
 {% endblock %}

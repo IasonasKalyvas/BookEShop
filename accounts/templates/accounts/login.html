@@ -8,44 +8,47 @@
 {% block content %}
 
 <div class="auth-wrapper">
-
     <div class="user_card">
-
+        <!-- Page title -->
         <h3 id="form-title">LOGIN</h3>
-
+        <!-- Display login error message -->
         {% if error_message %}
             <div class="form-error">
                 {{ error_message }}
             </div>
         {% endif %}
-
+        <!-- Login form -->
         <form method="POST">
             {% csrf_token %}
-
+            <!-- Username input -->
             <div class="input-group">
-                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                <input type="text" name="username" maxlength="50" class="form-control" placeholder="Username...">
+                <span class="input-group-text">
+                    <i class="fas fa-user"></i>
+                </span>
+                <input type="text" name="username" maxlength="50" class="form-control" placeholder="Username..." required>
             </div>
-
+            <!-- Password input -->
             <div class="input-group">
-                <span class="input-group-text"><i class="fas fa-key"></i></span>
-                <input type="password" name="password" maxlength="50" class="form-control" placeholder="Password...">
+                <span class="input-group-text">
+                    <i class="fas fa-key"></i>
+                </span>
+                <input type="password" name="password" class="form-control" placeholder="Password..." required>
             </div>
-
+            <!-- Submit button -->
             <input class="btn login_btn" type="submit" value="Login">
         </form>
-
+        <!-- Registration link -->
         <div class="links">
             Don't have an account?
             <a href="{% url 'accounts:register' %}">Sign Up</a>
         </div>
+        <!-- Demo credentials (for testing purposes) -->
         <ul>
-            <li>    Demo credentials: Admin: Iasonas / jkal12345</li>
-            <li>   Manager: TestManager / TestManager123</li>
-            <li>   User: TestUser / TestUser123</li>
+            <li>Demo credentials: Admin: Iasonas / jkal12345</li>
+            <li>Manager: TestManager / TestManager123</li>
+            <li>User: TestUser / TestUser123</li>
         </ul>
     </div>
-
 </div>
 
 {% endblock %}

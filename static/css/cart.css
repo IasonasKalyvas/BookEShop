@@ -1,3 +1,4 @@
+/*CART LAYOUT*/
 .cart-container {
     max-width: 1100px;
     margin: auto;
@@ -8,6 +9,7 @@
     gap: 30px;
 }
 
+/*CART ITEMS*/
 .cart-items {
     flex: 2;
 }
@@ -25,15 +27,24 @@
     gap: 10px;
 }
 
+/* Book title inside cart item */
 .cart-item h4 {
     margin: 0;
 }
 
+/* Book price inside cart item */
 .cart-item p {
     margin: 5px 0 0;
     color: #666;
 }
 
+/* Right-aligned total price */
+.cart-item > div:last-child {
+    text-align: right;
+    font-weight: bold;
+}
+
+/*QUANTITY CONTROLS*/
 .quantity-controls {
     display: flex;
     align-items: center;
@@ -59,11 +70,7 @@
     line-height: 1;
 }
 
-.cart-item > div:last-child {
-    text-align: right;
-    font-weight: bold;
-}
-
+/*CART SUMMARY*/
 .cart-summary {
     flex: 1;
     background: white;
@@ -71,6 +78,7 @@
     border-radius: 12px;
 }
 
+/* Checkout button */
 .checkout-btn {
     display: block;
     background: #2f5d3f;
@@ -78,4 +86,20 @@
     padding: 10px;
     text-align: center;
     border-radius: 10px;
+}
+
+/*EMPTY CART STATE*/
+.empty-cart {
+    text-align: center;
+    padding: 40px;
+}
+
+.btn-primary {
+    display: inline-block;
+    margin-top: 15px;
+    background: #2f5d3f;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 10px;
+    text-decoration: none;
 }
