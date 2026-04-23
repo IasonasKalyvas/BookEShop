@@ -1,0 +1,138 @@
+/*WRAPPER*/
+.book-form-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+    background: #f4f6f9;
+    min-height: 100vh;
+}
+
+/*CARD*/
+.book-form-card {
+    width: 100%;
+    max-width: 900px;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+/*TITLE*/
+.form-title {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 28px;
+    color: #333;
+}
+
+/*FORM SECTIONS*/
+.form-section {
+    margin-bottom: 25px;
+}
+
+.form-section p {
+    margin-bottom: 10px;
+}
+
+/*IMAGE FORMSET*/
+.image-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background: #fafafa;
+}
+
+.image-input input[type="file"] {
+    font-size: 14px;
+}
+
+.primary-input,
+.delete-input {
+    font-size: 14px;
+}
+
+/*ERRORS*/
+.form-errors {
+    background: #ffe6e6;
+    color: #a10000;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+/*ACTIONS*/
+.form-actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn-save {
+    background: #2c7be5;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-save:hover {
+    background: #1a68d1;
+}
+
+/*DARK MODE*/
+body.dark-mode .book-form-wrapper {
+    background: #121417;
+}
+
+body.dark-mode .book-form-card {
+    background: #1a1d22;
+    color: #e6e6e6;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+body.dark-mode .form-title {
+    color: #e6e6e6;
+}
+
+body.dark-mode .form-section p {
+    color: #e6e6e6;
+}
+
+/*INPUTS*/
+body.dark-mode .form-section input,
+body.dark-mode .form-section select,
+body.dark-mode .form-section textarea {
+    background: #1a1d22;
+    color: #e6e6e6;
+    border: 1px solid #2c3440;
+}
+
+/*IMAGE ROW DARK MODE*/
+body.dark-mode .image-row {
+    background: #222831;
+    border: 1px solid #2c3440;
+}
+
+body.dark-mode .image-row label {
+    color: #e6e6e6;
+}
+
+/*ERROR DARK MODE*/
+body.dark-mode .form-errors {
+    background: #3a1f1f;
+    color: #ffb3b3;
+}
+
+/*BUTTON DARK MODE*/
+body.dark-mode .btn-save {
+    background: #2c3440;
+}
+
+body.dark-mode .btn-save:hover {
+    background: #3a4654;
+}

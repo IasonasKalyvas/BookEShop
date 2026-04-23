@@ -1,0 +1,187 @@
+/*FILTER FORM (BOOK LIST SEARCH + FILTERS)*/
+
+/* Main filter form container */
+.book-filter-form {
+    background: #ffffff;
+    padding: 16px;
+    border-radius: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    border: 1px solid #ddd;
+    justify-content: center;
+}
+
+/* Inputs inside filter form */
+.book-filter-form input {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    min-width: 150px;
+}
+
+/* Focus state */
+.book-filter-form input:focus {
+    outline: none;
+    border-color: #2f5d3f;
+    box-shadow: 0 0 5px rgba(47, 93, 63, 0.3);
+}
+
+/* Buttons */
+.book-filter-form button {
+    padding: 10px 14px;
+    background: #2f5d3f;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.book-filter-form button:hover {
+    background: #3c7a52;
+}
+
+
+/*DROPDOWN FILTERS (CATEGORIES + DATE)*/
+
+.dropdown {
+    background: #f9f9f9;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    min-width: 180px;
+}
+
+.dropdown summary {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.dropdown-content {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+
+/*BOOK GRID*/
+
+.book-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-top: 30px;
+}
+
+/* Individual book card */
+.book-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #e0ddd7;
+    transition: 0.25s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+/* Hover effect */
+.book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+/* Book image */
+.book-card img {
+    width: 100%;
+    height: 260px;
+    object-fit: contain;
+    background: linear-gradient(135deg, #f6f6f6, #eeeeee);
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+/* Book info section */
+.book-info {
+    padding: 15px;
+    text-align: center;
+    border-top: 5px solid #2f5d3f;
+}
+
+/* Title */
+.book-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 0 8px 0;
+}
+
+.book-title a {
+    color: #2f3b2f;
+    text-decoration: none;
+}
+
+/* Author */
+.book-author {
+    color: #888;
+    font-size: 13px;
+    margin: 0 0 8px 0;
+}
+
+/* Price */
+.book-price {
+    font-weight: bold;
+    color: #2f5d3f;
+    font-size: 16px;
+}
+
+
+/*PAGINATION*/
+
+.pagination {
+    margin: 30px 0;
+    text-align: center;
+}
+
+/* Pagination links */
+.pagination a {
+    margin: 0 5px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    background: #2f5d3f;
+    color: white;
+}
+
+/* Active page */
+.pagination strong {
+    margin: 0 5px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #3c7a52;
+    color: white;
+}
+
+
+/*RESPONSIVE DESIGN*/
+
+/* Tablet */
+@media (max-width: 768px) {
+    .book-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+    .book-container {
+        grid-template-columns: 1fr;
+    }
+
+    form[action*="book_list"] {
+        flex-direction: column;
+    }
+
+    form[action*="book_list"] input,
+    .dropdown {
+        width: 100%;
+    }
+}

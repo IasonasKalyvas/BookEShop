@@ -1,0 +1,85 @@
+/* FORM */
+.review-form-box {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* form layout */
+.review-form-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* form inputs */
+.review-form-box input,
+.review-form-box select,
+.review-form-box textarea {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* REVIEW SECTION */
+.review-section {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    margin-top: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* GRID */
+.review-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* CARD */
+.review-card {
+    background: #fafafa;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #e0ddd7;
+}
+
+/* STARS */
+.stars {
+    color: gold;
+}
+
+/* PAGINATION */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+/* pagination links */
+.pagination a {
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #2f5d3f;
+    color: white;
+    text-decoration: none;
+}
+
+/* active page */
+.pagination strong {
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #3c7a52;
+    color: white;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .review-grid {
+        grid-template-columns: 1fr;
+    }
+}
