@@ -7,7 +7,7 @@ class Review(models.Model):
     first_name = models.CharField(max_length=50, default="Anonymous")
     last_name = models.CharField(max_length=50, blank=True, default="")
     rating = models.IntegerField(default=5)
-    comment = models.TextField(max_length=300)
+    comment = models.TextField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f"{self.book.title} - {self.rating}⭐"

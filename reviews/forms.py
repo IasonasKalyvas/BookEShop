@@ -11,9 +11,9 @@ class ReviewForm(forms.ModelForm):
     # Custom form fields with validation
     rating = forms.IntegerField(min_value=1, max_value=5)
     comment = forms.CharField(widget=forms.Textarea(attrs={
-        'maxlength': 300,
+        'maxlength': 50,
         'rows': 4,
-        'placeholder': 'Write your review (max 300 characters)...'
+        'placeholder': 'Write your review (max 50 characters)...'
     }))
 
     # Dropdown to select the book being reviewed
