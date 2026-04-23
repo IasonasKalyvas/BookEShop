@@ -15,12 +15,12 @@
         <!-- Book image gallery -->
         <div class="book-gallery"
              id="book-gallery"
-             data-images="{% for img in book.get_ordered_images %}{{ img.image.url }}{% if not forloop.last %},{% endif %}{% endfor %}">
+             data-images="{% for img in book.get_ordered_images %}{{ img.get_url }}{% if not forloop.last %},{% endif %}{% endfor %}">
             <div class="main-image-container">
                 {% for img in book.get_ordered_images %}
                     {% if forloop.first %}
                         <img id="mainImage"
-                             src="{{ img.image.url }}"
+                             src="{{ img.get_url }}"
                              alt="{{ book.title }}"
                              class="main-image">
                     {% endif %}
@@ -34,7 +34,7 @@
             {% if book.images.count > 1 %}
             <div class="thumbnail-strip">
                 {% for img in book.get_ordered_images %}
-                    <img src="{{ img.image.url }}"
+                    <img src="{{ img.get_url }}" alt="{{ book.title }}"
                          class="thumbnail {% if forloop.first %}active{% endif %}"
                          data-index="{{ forloop.counter0 }}">
                 {% endfor %}
@@ -167,7 +167,7 @@
                     <!-- Book image -->
                     {% with img=similar.get_primary_image %}
                         {% if img %}
-                            <img src="{{ img.image.url }}">
+                            <img src="{{ img.get_url }}" alt="{{ similar.title }}">
                         {% else %}
                             <div class="no-image-small">No Image</div>
                         {% endif %}

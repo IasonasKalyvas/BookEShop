@@ -1,9 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
-from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from .models import Book, Category
-import random
 from accounts.models import Profile
 
 # Helper function to get all categories for use in multiple views
