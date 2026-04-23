@@ -1,3 +1,5 @@
+from profile import Profile
+from accounts.models import Profile
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Cart, CartItem, Order, OrderItem
@@ -150,6 +152,10 @@ def checkout(request):
                 # Reduce stock after successful purchase
                 item.book.stock -= item.quantity
                 item.book.save()
+
+                # Remove purchased books from user's favorites if they exist there
+                profile, _ = Profile.objects.get_or_create(user=request.user)
+                profile.favorite_books.remove(item.book)
 
             # Clear user's cart after purchase    
             cart.items.all().delete()

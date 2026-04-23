@@ -106,7 +106,7 @@ def manager_required(user):
 @user_passes_test(manager_required)
 def manage_books(request):
     query = request.GET.get("q")
-    books = Book.objects.all()
+    books = Book.objects.filter(stock__gt=0)
     if query:
         books = books.filter(title__icontains=query)
     out_of_stock_books = Book.objects.filter(stock=0)
