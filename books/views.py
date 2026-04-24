@@ -3,6 +3,8 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from .models import Book, Category
 from accounts.models import Profile
+import re
+from decimal import Decimal, InvalidOperation
 
 # Helper function to get all categories for use in multiple views
 def get_categories():
@@ -49,15 +51,31 @@ def book_list(request):
     books = Book.objects.filter(stock__gt=0)
     search = request.GET.get("search")
     author = request.GET.get("author")
-    book_id = request.GET.get("id")
+    isbn_13 = request.GET.get("id")
     min_price = request.GET.get("min_price")
     max_price = request.GET.get("max_price")
+    if author:
+        if not re.match(r'^[a-zA-Z\s]+$', author):
+            author = None
+    if isbn_13:
+        if not re.match(r'^\d{13}$', isbn_13):
+            isbn_13 = None
+    def is_valid_price(value):
+        try:
+            Decimal(value)
+            return True
+        except (InvalidOperation, TypeError):
+            return False
+    if min_price and not is_valid_price(min_price):
+        min_price = None
+    if max_price and not is_valid_price(max_price):
+        max_price = None
     if search:
         books = books.filter(title__icontains=search)
     if author:
         books = books.filter(author__icontains=author)
-    if book_id:
-        books = books.filter(id=book_id)
+    if isbn_13:
+        books = books.filter(isbn_13=isbn_13)
     if min_price:
         books = books.filter(price__gte=min_price)
     if max_price:
