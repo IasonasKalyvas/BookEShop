@@ -2,15 +2,15 @@ import os
 from pathlib import Path
 import cloudinary
 
-    BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-    SECRET_KEY = os.environ.get('SECRET_KEY', r'django-insecure-5i@8l%i@q^el@l)q6h8+(_+n$%c$rc0-aev5*psjltzmzl+8^#')
+SECRET_KEY = os.environ.get('SECRET_KEY', r'django-insecure-5i@8l%i@q^el@l)q6h8+(_+n$%c$rc0-aev5*psjltzmzl+8^#')
 
-    DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-    ALLOWED_HOSTS = ['.onrender.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['.onrender.com', '127.0.0.1', 'localhost']
 
-    INSTALLED_APPS = [
+INSTALLED_APPS = [
         'accounts.apps.AccountsConfig',
         'adminpanel',
         'books',
@@ -27,7 +27,7 @@ import cloudinary
         'django.contrib.staticfiles',
     ]
 
-    MIDDLEWARE = [
+MIDDLEWARE = [
         'django.middleware.security.SecurityMiddleware',
         'whitenoise.middleware.WhiteNoiseMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
@@ -38,9 +38,9 @@ import cloudinary
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
     ]
 
-    ROOT_URLCONF = 'BookEShop.urls'
+ROOT_URLCONF = 'BookEShop.urls'
 
-    TEMPLATES = [
+TEMPLATES = [
         {
             'BACKEND': 'django.template.backends.django.DjangoTemplates',
             'DIRS': [BASE_DIR / 'templates'],
@@ -57,9 +57,9 @@ import cloudinary
         },
     ]
 
-    WSGI_APPLICATION = 'BookEShop.wsgi.application'
+WSGI_APPLICATION = 'BookEShop.wsgi.application'
 
-    DATABASES = {
+DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
@@ -69,44 +69,44 @@ import cloudinary
         }
     }
 
-    AUTH_PASSWORD_VALIDATORS = [
+AUTH_PASSWORD_VALIDATORS = [
         {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
         {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
         {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
         {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
     ]
 
-    LANGUAGE_CODE = 'en-us'
-    TIME_ZONE = 'UTC'
-    USE_I18N = True
-    USE_TZ = True
+LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'UTC'
+USE_I18N = True
+USE_TZ = True
 
-    STATIC_URL = '/static/'
-    STATICFILES_DIRS = [BASE_DIR / "static"]
-    STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = BASE_DIR / 'media'
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'accounts:profile'
+LOGOUT_REDIRECT_URL = 'accounts:login'
 
-    LOGIN_URL = 'accounts:login'
-    LOGIN_REDIRECT_URL = 'accounts:profile'
-    LOGOUT_REDIRECT_URL = 'accounts:login'
-
-    CLOUDINARY_STORAGE = {
+CLOUDINARY_STORAGE = {
         'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', 'dyegbado7'),
         'API_KEY': os.environ.get('CLOUDINARY_API_KEY', '517894831454185'),
         'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET', 'xRwP8ORn-TW4hEfXLur-_CNk4Js'),
     }
 
-    cloudinary.config(
+cloudinary.config(
         cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME', 'dyegbado7'),
         api_key=os.environ.get('CLOUDINARY_API_KEY', '517894831454185'),
         api_secret=os.environ.get('CLOUDINARY_API_SECRET', 'xRwP8ORn-TW4hEfXLur-_CNk4Js'),
         secure=True
     )
 
-    STORAGES = {
+STORAGES = {
         "default": {
             "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
         },
