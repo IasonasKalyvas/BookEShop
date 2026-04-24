@@ -87,7 +87,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 WHITENOISE_MANIFEST_STRICT = False 
 
-#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
