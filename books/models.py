@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from datetime import date
 from cloudinary.models import CloudinaryField
 
+
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     class Meta:
@@ -15,15 +16,15 @@ class Category(models.Model):
         return self.name
 
 class Book(models.Model):
-    title = models.CharField(max_length=200)
-    author = models.CharField(max_length=200)
+    title = models.CharField(max_length=50)
+    author = models.CharField(max_length=50)
     categories = models.ManyToManyField(Category)
     description = models.TextField()
     price = models.DecimalField(max_digits=6, decimal_places=2, validators=[MinValueValidator(0)])
     stock = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(999)])
     isbn_10 = models.CharField(max_length=10, unique=True, blank=True, null=True, validators=[RegexValidator(regex=r'^\d{10}$', message="ISBN-10 must be exactly 10 digits.")])
     isbn_13 = models.CharField(max_length=13, unique=True, null=True, validators=[RegexValidator(regex=r'^\d{13}$', message="ISBN-13 must be exactly 13 digits.")])
-    publisher = models.CharField(max_length=200, null=True)
+    publisher = models.CharField(max_length=50, null=True)
     page_count = models.PositiveIntegerField(null=True)
     COVER_CHOICES = [
         ('hardcover', 'Hardcover'),
