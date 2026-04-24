@@ -14,14 +14,15 @@
     <form method="GET" action="{% url 'books:book_list' %}" class="book-filter-form">
         <input type="text" name="search" placeholder="Search books..." maxlength="50">
         <input type="text" name="author" placeholder="Author" maxlength="50">
-        <input
-         type="text"
+      <input
+        type="tel"
         name="id"
         placeholder="Book ISBN-13"
         inputmode="numeric"
+        pattern="[0-9]{13}"
         maxlength="13"
-        oninput="this.value = this.value.replace(/\D/g,'').slice(0,13)"
-        >
+        title="Please enter exactly 13 digits"
+        />
         <input type="number" name="min_price" placeholder="Min Price">
         <input type="number" name="max_price" placeholder="Max Price">
         <details class="dropdown">
