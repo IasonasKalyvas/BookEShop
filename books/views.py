@@ -93,7 +93,7 @@ def book_list(request):
             books = books.filter(published_date__gte=today - timedelta(days=90))
         elif selected_date == "180":
             books = books.filter(published_date__gte=today - timedelta(days=180))
-    paginator = Paginator(books, 16)
+    paginator = Paginator(books, 15)
     page_obj = paginator.get_page(request.GET.get("page"))
     return render(request, "books/book_list.html", {
         "books": page_obj,
