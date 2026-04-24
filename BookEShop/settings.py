@@ -1,6 +1,6 @@
-    import os
-    from pathlib import Path
-    import cloudinary
+import os
+from pathlib import Path
+import cloudinary
 
     BASE_DIR = Path(__file__).resolve().parent.parent
 
