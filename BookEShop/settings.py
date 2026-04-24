@@ -11,21 +11,21 @@ DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = ['.onrender.com', '127.0.0.1', 'localhost']
 
 INSTALLED_APPS = [
-        'accounts.apps.AccountsConfig',
-        'adminpanel',
-        'books',
-        'orders',
-        'reviews',
-        'core',
-        'cloudinary',
-        'cloudinary_storage',
-        'django.contrib.admin',
-        'django.contrib.auth',
-        'django.contrib.contenttypes',
-        'django.contrib.sessions',
-        'django.contrib.messages',
-        'django.contrib.staticfiles',
-    ]
+    'cloudinary_storage', 
+    'django.contrib.staticfiles',
+    'accounts.apps.AccountsConfig',
+    'adminpanel',
+    'books',
+    'orders',
+    'reviews',
+    'core',
+    'cloudinary',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+]
 
 MIDDLEWARE = [
         'django.middleware.security.SecurityMiddleware',
@@ -87,7 +87,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 WHITENOISE_MANIFEST_STRICT = False 
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -110,10 +110,10 @@ cloudinary.config(
     )
 
 STORAGES = {
-        "default": {
-            "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-        },
-        "staticfiles": {
-            "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
-        },
-    }
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.StaticFilesStorage",
+    },
+}
