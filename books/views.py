@@ -7,6 +7,21 @@ import re
 from decimal import Decimal, InvalidOperation
 from django.db import IntegrityError
 
+# Helper function to validate category name input, ensuring it is not empty and does not exceed 20 characters
+def validate_category_name(name):
+    if not name:
+        return None
+
+    name = name.strip()
+
+    if len(name) == 0:
+        return None
+
+    if len(name) > 20:
+        return None
+
+    return name
+
 # Helper function to get all categories for use in multiple views
 def get_categories():
     return Category.objects.all()
@@ -25,12 +40,12 @@ def add_category(request):
     if request.method == "POST":
         name = request.POST.get("name")
 
+        name = validate_category_name(name)
+
         if name:
             try:
                 Category.objects.create(name=name)
-
             except IntegrityError:
-                # category already exists → just ignore or handle safely
                 pass
 
         return redirect("books:category_list")
@@ -40,12 +55,21 @@ def add_category(request):
 # Edit category view that allows updating the name of an existing category, ensuring that the new name is not empty and does not duplicate another category's name
 def edit_category(request, pk):
     category = get_object_or_404(Category, pk=pk)
+
     if request.method == "POST":
         name = request.POST.get("name")
+
+        name = validate_category_name(name)
+
         if name:
-            category.name = name
-            category.save()
+            try:
+                category.name = name
+                category.save()
+            except IntegrityError:
+                pass
+
         return redirect("books:category_list")
+
     return redirect("books:category_list")
 
 # Delete category view that removes a category and redirects back to the category list page, ensuring that any books associated with the deleted category are not affected (books will simply lose that category association)
