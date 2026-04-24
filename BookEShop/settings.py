@@ -18,7 +18,7 @@ INSTALLED_APPS = [
         'reviews',
         'core',
         'cloudinary',
-        #'cloudinary_storage',
+        'cloudinary_storage',
         'django.contrib.admin',
         'django.contrib.auth',
         'django.contrib.contenttypes',
