@@ -5,6 +5,7 @@ from .models import Book, Category
 from accounts.models import Profile
 import re
 from decimal import Decimal, InvalidOperation
+from django.db import IntegrityError
 
 # Helper function to get all categories for use in multiple views
 def get_categories():
@@ -23,8 +24,15 @@ def category_list(request):
 def add_category(request):
     if request.method == "POST":
         name = request.POST.get("name")
+
         if name:
-            Category.objects.create(name=name)
+            try:
+                Category.objects.create(name=name)
+
+            except IntegrityError:
+                # category already exists → just ignore or handle safely
+                pass
+
         return redirect("books:category_list")
 
     return redirect("books:category_list")
